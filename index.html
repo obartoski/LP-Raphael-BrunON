@@ -3,427 +3,613 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raphael Bruno | Movimento que Inspira</title>
+<title>Raphael BrunON | Mais que dança, uma energia real.</title>
+<meta name="description" content="Raphael BrunON — professor, coreógrafo e criador. Bike Indoor, Boom Dance, Boom Jump, Personal Trainer e coreografias para casamentos e debutantes.">
+<link rel="icon" href="assets/hero/logo-raphael-brunon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg-0:#0d0d0d;
-    --bg-1:#111111;
-    --bg-2:#161616;
-    --bg-3:#1a1a1a;
-    --line:#2a2a2a;
-    --text:#f2f1ee;
-    --text-dim:#a6a49e;
-    --text-faint:#6f6d68;
 
-    --bike:#2f7cf6;
-    --dance:#9b4bf0;
-    --jump:#2ecf7a;
-    --personal:#e8465a;
-    --wedding:#d8b25a;
-    --deb:#ef6fa8;
+/* ===========================================================
+   RESET / BASE
+=========================================================== */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-weight:400;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+ul{list-style:none;}
+button{font:inherit;background:none;border:none;color:inherit;cursor:pointer;}
+::selection{background:var(--accent);color:#09090b;}
 
-    --display: 'Bebas Neue', sans-serif;
-    --body: 'Poppins', sans-serif;
-  }
+/* ===========================================================
+   VARIÁVEIS
+=========================================================== */
+:root{
+  --bg:#09090b;
+  --bg-soft:#111014;
+  --surface:#151317;
+  --text:#f7f4f6;
+  --text-muted:#aaa4aa;
+  --text-faint:rgba(247,244,246,.4);
+  --line:rgba(255,255,255,.10);
+  --line-strong:rgba(255,255,255,.18);
+  --accent:#ef65ce;
+  --accent-soft:#d996df;
+  --accent-dim:rgba(239,101,206,.14);
 
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--bg-1);
-    color:var(--text);
-    font-family:var(--body);
-    font-weight:300;
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:inherit;text-decoration:none;}
-  img{display:block;max-width:100%;}
-  ::selection{background:var(--wedding);color:#0d0d0d;}
+  --font-display:'Syne', sans-serif;
+  --font-body:'DM Sans', sans-serif;
 
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
-  }
+  --gutter:6vw;
+  --container:1280px;
 
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--wedding);
-    outline-offset:3px;
-  }
+  --nav-h:84px;
+}
 
-  .eyebrow{
-    font-size:12px;
-    letter-spacing:.28em;
-    text-transform:uppercase;
-    color:var(--text-faint);
-    font-weight:500;
-  }
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;}
+}
 
-  h1,h2,h3{
-    font-family:var(--display);
-    font-weight:400;
-    letter-spacing:.01em;
-    line-height:.95;
-  }
+a:focus-visible, button:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
 
-  .section{position:relative;padding:120px 8vw;}
-  .section-inner{max-width:1240px;margin:0 auto;}
+/* ===========================================================
+   TIPOGRAFIA
+=========================================================== */
+.eyebrow{
+  font-size:12px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--accent-soft);
+  font-weight:600;
+  display:inline-block;
+}
+h1,h2,h3{
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:-.01em;
+  line-height:.98;
+}
+.accent-on{color:var(--accent);}
 
-  /* ---------- ambient smoke / glow (signature element) ---------- */
-  .glow{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(90px);
-    opacity:.35;
-    pointer-events:none;
-    z-index:0;
-  }
-  @keyframes drift{
-    0%,100%{transform:translate(0,0) scale(1);}
-    50%{transform:translate(-18px,14px) scale(1.06);}
-  }
+.section{position:relative;padding:clamp(80px,11vw,160px) var(--gutter);}
+.section-inner{max-width:var(--container);margin:0 auto;}
+.section-head{max-width:640px;margin-bottom:clamp(40px,6vw,72px);}
+.section-head h2{font-size:clamp(34px,4.6vw,58px);margin-top:14px;}
 
-  /* ---------- nav ---------- */
-  .nav{
-    position:fixed;top:0;left:0;right:0;z-index:50;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:22px 8vw;
-    background:linear-gradient(to bottom, rgba(13,13,13,.85), transparent);
-    backdrop-filter:blur(6px);
-  }
-  .nav-logo{font-family:var(--display);font-size:22px;letter-spacing:.12em;}
-  .nav-cta{
-    border:1px solid rgba(255,255,255,.25);
-    padding:10px 22px;
-    border-radius:2px;
-    font-size:13px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    transition:.25s;
-  }
-  .nav-cta:hover{background:var(--text);color:var(--bg-0);}
+/* ===========================================================
+   NAVBAR
+=========================================================== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  height:var(--nav-h);
+  padding:0 var(--gutter);
+  background:transparent;
+  border-bottom:1px solid transparent;
+  transition:background .4s ease, border-color .4s ease, backdrop-filter .4s ease;
+}
+.nav.is-scrolled{
+  background:rgba(9,9,11,.72);
+  border-bottom-color:var(--line);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+.nav-logo{display:flex;align-items:center;}
+.nav-logo img{height:30px;width:auto;}
+.nav-menu{display:flex;align-items:center;gap:40px;}
+.nav-links{display:flex;align-items:center;gap:34px;}
+.nav-links a{
+  position:relative;
+  font-size:13px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  padding:6px 0;
+  transition:color .25s ease;
+}
+.nav-links a::after{
+  content:"";
+  position:absolute;left:0;bottom:0;
+  width:100%;height:1px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:right;
+  transition:transform .3s ease;
+}
+.nav-links a:hover{color:var(--text);}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left;}
 
-  /* ---------- hero ---------- */
-  .hero{
-    position:relative;
-    min-height:100svh;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    align-items:stretch;
-    background:radial-gradient(circle at 20% 30%, #151515, var(--bg-1) 70%);
-    overflow:hidden;
-  }
-  .hero-figure{
-    position:relative;
-    display:flex;align-items:flex-end;justify-content:center;
-    z-index:1;
-  }
-  .hero-silhouette{
-    width:78%;
-    max-width:460px;
-    aspect-ratio:3/4.4;
-    margin-bottom:-2px;
-    background:
-      radial-gradient(ellipse at 50% 20%, rgba(216,178,90,.18), transparent 55%),
-      linear-gradient(180deg, #2a2a2a 0%, #1b1b1b 55%, #121212 100%);
-    border-radius:220px 220px 24px 24px / 260px 260px 24px 24px;
-    position:relative;
-    box-shadow: 0 60px 120px -40px rgba(0,0,0,.8);
-  }
-  .hero-silhouette::after{
-    content:"RB";
-    position:absolute;inset:0;
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--display);
-    font-size:15vw;
-    color:rgba(255,255,255,.05);
-    letter-spacing:.05em;
-  }
-  .hero-tag{
-    position:absolute;left:6%;bottom:8%;
-    font-size:12px;
-    color:var(--text-faint);
-    letter-spacing:.15em;
-    text-transform:uppercase;
-    writing-mode:vertical-rl;
-  }
-  .hero-copy{
-    position:relative;z-index:1;
-    display:flex;flex-direction:column;justify-content:center;
-    padding:0 6vw 0 3vw;
-    gap:22px;
-  }
-  .hero-copy h1{
-    font-size:clamp(48px,7vw,96px);
-    color:var(--text);
-  }
-  .hero-copy h1 span{color:var(--wedding);}
-  .hero-sub{
-    font-size:clamp(16px,1.6vw,20px);
-    color:var(--text-dim);
-    font-weight:400;
-    max-width:480px;
-  }
-  .hero-desc{
-    font-size:14.5px;
-    line-height:1.9;
-    color:var(--text-faint);
-    max-width:440px;
-  }
-  .btn-primary{
-    display:inline-flex;align-items:center;gap:10px;
-    align-self:flex-start;
-    background:var(--text);
-    color:#0d0d0d;
-    padding:16px 34px;
-    font-size:13px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    font-weight:600;
-    border-radius:2px;
-    transition:.3s;
-  }
-  .btn-primary:hover{background:var(--wedding);transform:translateY(-2px);}
+.nav-cta{
+  border:1px solid var(--line-strong);
+  padding:10px 22px;
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:600;
+  border-radius:2px;
+  transition:.3s ease;
+  white-space:nowrap;
+}
+.nav-cta:hover{background:var(--accent);border-color:var(--accent);color:#09090b;}
 
-  .scroll-hint{
-    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint);
-    display:flex;flex-direction:column;align-items:center;gap:10px;
-    z-index:2;
-  }
-  .scroll-hint::after{
-    content:"";width:1px;height:36px;background:linear-gradient(var(--text-faint),transparent);
-  }
+.nav-toggle{
+  display:none;
+  width:34px;height:34px;
+  position:relative;
+  z-index:110;
+}
+.nav-toggle span{
+  position:absolute;left:5px;right:5px;height:1px;background:var(--text);
+  transition:transform .3s ease, opacity .3s ease, top .3s ease;
+}
+.nav-toggle span:nth-child(1){top:12px;}
+.nav-toggle span:nth-child(2){top:17px;}
+.nav-toggle span:nth-child(3){top:22px;}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){top:17px;transform:rotate(45deg);}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){top:17px;transform:rotate(-45deg);}
 
-  /* ---------- about ---------- */
-  .about{background:var(--bg-1);}
-  .about-grid{
-    display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center;
-  }
-  .about h2{font-size:clamp(38px,5vw,64px);margin-bottom:28px;}
-  .about p{color:var(--text-dim);line-height:1.9;font-size:15.5px;margin-bottom:16px;font-weight:300;}
-  .specialties{
-    margin-top:34px;
-    display:flex;flex-wrap:wrap;gap:10px;
-  }
-  .chip{
-    border:1px solid var(--line);
-    padding:9px 16px;
-    font-size:12.5px;
-    letter-spacing:.04em;
-    color:var(--text-dim);
-    border-radius:2px;
-  }
-  .about-photo{
-    position:relative;
-    aspect-ratio:4/5;
-    border-radius:4px;
-    background:
-      radial-gradient(circle at 70% 20%, rgba(47,124,246,.14), transparent 55%),
-      linear-gradient(160deg,#1c1c1c,#111);
-    border:1px solid var(--line);
-    display:flex;align-items:center;justify-content:center;
-    overflow:hidden;
-  }
-  .about-photo span{
-    font-family:var(--display);
-    font-size:14px;letter-spacing:.2em;color:var(--text-faint);text-transform:uppercase;
-  }
+.mobile-menu{
+  position:fixed;inset:0;z-index:90;
+  background:rgba(9,9,11,.98);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;
+  opacity:0;visibility:hidden;
+  transform:translateY(-8px);
+  transition:opacity .35s ease, transform .35s ease, visibility 0s linear .35s;
+}
+.mobile-menu.is-open{
+  opacity:1;visibility:visible;transform:translateY(0);
+  transition:opacity .35s ease, transform .35s ease;
+}
+.mobile-menu nav{display:flex;flex-direction:column;align-items:center;gap:26px;}
+.mobile-menu nav a{
+  font-family:var(--font-display);
+  font-size:clamp(28px,7vw,40px);
+  text-transform:uppercase;
+  color:var(--text);
+  font-weight:700;
+}
+.mobile-menu nav a:hover{color:var(--accent);}
 
-  /* ---------- services ---------- */
-  .services{background:var(--bg-1);}
-  .services-head{max-width:600px;margin-bottom:64px;}
-  .services-head h2{font-size:clamp(38px,5vw,64px);margin-top:14px;}
-  .services-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
-    background:var(--line);
-    border:1px solid var(--line);
-  }
-  .service-card{
-    position:relative;
-    background:var(--bg-2);
-    padding:44px 30px;
-    min-height:320px;
-    display:flex;flex-direction:column;justify-content:flex-end;
-    overflow:hidden;
-    transition:background .4s;
-  }
-  .service-card::before{
-    content:"";
-    position:absolute;top:-30%;right:-20%;
-    width:70%;height:70%;
-    border-radius:50%;
-    filter:blur(60px);
-    opacity:0;
-    transition:opacity .4s;
-  }
-  .service-card:hover::before{opacity:.5;}
-  .service-card:hover{background:#1c1c1c;}
-  .service-card[data-c="bike"]::before{background:var(--bike);}
-  .service-card[data-c="dance"]::before{background:var(--dance);}
-  .service-card[data-c="jump"]::before{background:var(--jump);}
-  .service-card[data-c="personal"]::before{background:var(--personal);}
-  .service-card[data-c="wedding"]::before{background:var(--wedding);}
-  .service-card[data-c="deb"]::before{background:var(--deb);}
+/* ===========================================================
+   HERO
+=========================================================== */
+.hero{
+  position:relative;
+  height:100svh;
+  min-height:560px;
+  overflow:hidden;
+  background:var(--bg);
+}
+.hero-stage{
+  position:absolute;inset:0;
+  z-index:0;
+}
+.hero-layer{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  will-change:transform;
+}
+.hero-bg{object-position:58% 50%;z-index:0;}
+.hero-on{object-position:58% 46%;z-index:1;}
+.hero-raphael{object-position:58% 46%;z-index:2;}
 
-  .service-num{font-size:12px;color:var(--text-faint);letter-spacing:.1em;margin-bottom:18px;position:relative;z-index:1;}
-  .service-card h3{font-size:30px;position:relative;z-index:1;margin-bottom:10px;}
-  .service-card p{font-size:13.5px;color:var(--text-dim);line-height:1.7;position:relative;z-index:1;margin-bottom:22px;max-width:280px;}
-  .service-link{
-    position:relative;z-index:1;
-    font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-    display:inline-flex;align-items:center;gap:8px;
-    color:var(--text);
-    border-bottom:1px solid rgba(255,255,255,.25);
-    padding-bottom:4px;
-    width:fit-content;
-  }
+.hero-scrim{
+  position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(90deg, rgba(9,9,11,.78) 0%, rgba(9,9,11,.48) 28%, rgba(9,9,11,.12) 52%, transparent 66%);
+}
 
-  /* ---------- gallery ---------- */
-  .gallery{background:var(--bg-1);}
-  .gallery-grid{
-    display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:10px;
-  }
-  .gallery-grid .g:nth-child(1){grid-column:span 2;grid-row:span 2;}
-  .gallery-grid .g:nth-child(4){grid-column:span 2;}
-  .g{
-    position:relative;overflow:hidden;border-radius:3px;
-    background:linear-gradient(150deg,#1d1d1d,#131313);
-    border:1px solid var(--line);
-  }
-  .g-inner{
-    position:absolute;inset:0;
-    display:flex;align-items:center;justify-content:center;
-    transition:transform .6s cubic-bezier(.2,.7,.2,1);
-    font-family:var(--display);
-    letter-spacing:.15em;font-size:11px;color:var(--text-faint);text-transform:uppercase;
-  }
-  .g:hover .g-inner{transform:scale(1.08);}
+.hero-content{
+  position:relative;z-index:4;
+  height:100%;
+  display:flex;flex-direction:column;justify-content:center;
+  max-width:600px;
+  padding:calc(var(--nav-h) + 24px) var(--gutter) 64px;
+  gap:22px;
+  will-change:transform,opacity;
+}
+.hero-content .eyebrow{margin-bottom:2px;}
+.hero-title{
+  font-size:clamp(52px,8.4vw,108px);
+  text-transform:uppercase;
+  color:var(--text);
+}
+.hero-lede{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(18px,2vw,24px);
+  color:var(--text-muted);
+  line-height:1.3;
+  max-width:360px;
+}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;}
 
-  /* ---------- videos ---------- */
-  .videos{background:var(--bg-1);}
-  .videos-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:50px;}
-  .videos-head h2{font-size:clamp(36px,5vw,58px);margin-top:14px;}
-  .yt-link{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:4px;}
-  .video-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .video-card{
-    aspect-ratio:9/16;
-    background:linear-gradient(160deg,#1c1c1c,#111);
-    border:1px solid var(--line);
-    border-radius:3px;
-    position:relative;
-    display:flex;align-items:center;justify-content:center;
-    overflow:hidden;
-  }
-  .play-btn{
-    width:52px;height:52px;border-radius:50%;
-    border:1px solid rgba(255,255,255,.35);
-    display:flex;align-items:center;justify-content:center;
-    transition:.3s;
-  }
-  .video-card:hover .play-btn{background:var(--text);}
-  .video-card:hover .play-btn svg path{fill:#0d0d0d;}
-  .play-btn svg{width:14px;margin-left:2px;}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 30px;
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:600;
+  border-radius:2px;
+  transition:.3s ease;
+  border:1px solid transparent;
+}
+.btn-primary{background:var(--text);color:#09090b;}
+.btn-primary:hover{background:var(--accent);transform:translateY(-2px);}
+.btn-ghost{border-color:var(--line-strong);color:var(--text);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
 
-  /* ---------- testimonials ---------- */
-  .testimonials{background:var(--bg-2);}
-  .t-head{max-width:560px;margin-bottom:56px;}
-  .t-head h2{font-size:clamp(38px,5vw,60px);margin-top:14px;}
-  .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
-  .t-card{background:var(--bg-3);padding:36px 30px;display:flex;flex-direction:column;gap:20px;}
-  .t-quote{font-size:14.5px;line-height:1.85;color:var(--text-dim);font-weight:300;}
-  .t-person{display:flex;align-items:center;gap:12px;margin-top:auto;}
-  .t-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(160deg,#2a2a2a,#161616);flex-shrink:0;}
-  .t-name{font-size:13px;letter-spacing:.03em;}
-  .t-role{font-size:11.5px;color:var(--text-faint);}
+.hero-scrollcue{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  z-index:4;
+  width:1px;height:44px;
+  overflow:hidden;
+}
+.hero-scrollcue span{
+  display:block;width:1px;height:100%;
+  background:linear-gradient(var(--accent-soft),transparent);
+  animation:scrollcue 2.2s ease-in-out infinite;
+}
+@keyframes scrollcue{
+  0%{transform:translateY(-100%);}
+  100%{transform:translateY(100%);}
+}
 
-  /* ---------- contact ---------- */
-  .contact{
-    background:radial-gradient(circle at 30% 20%, #171717, var(--bg-1) 65%);
-    text-align:center;
-  }
-  .contact h2{font-size:clamp(42px,7vw,90px);margin-bottom:20px;}
-  .contact p{color:var(--text-dim);max-width:480px;margin:0 auto 44px;font-size:15px;line-height:1.8;}
-  .contact-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:56px;}
-  .btn-ghost{
-    border:1px solid rgba(255,255,255,.22);
-    padding:15px 30px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;
-    border-radius:2px;transition:.25s;
-  }
-  .btn-ghost:hover{border-color:var(--text);}
-  .contact-links{display:flex;justify-content:center;gap:38px;flex-wrap:wrap;color:var(--text-faint);font-size:13px;letter-spacing:.03em;}
-  .contact-links a{border-bottom:1px solid transparent;transition:.2s;}
-  .contact-links a:hover{color:var(--text);border-color:var(--text);}
+/* continuidade rosa entre hero e próxima seção */
+.hero-edge{
+  position:relative;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--accent-soft) 45%, var(--accent) 55%, transparent);
+  opacity:.5;
+}
 
-  /* ---------- footer ---------- */
-  footer{
-    padding:36px 8vw;
-    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
-    border-top:1px solid var(--line);
-    font-size:12px;color:var(--text-faint);
-  }
-  .foot-logo{font-family:var(--display);font-size:18px;letter-spacing:.1em;color:var(--text-dim);}
-  .foot-social{display:flex;gap:22px;}
+/* ===========================================================
+   SOBRE
+=========================================================== */
+.about{background:var(--bg);}
+.about-grid{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(48px,8vw,110px);align-items:start;
+}
+.about-copy h2{font-size:clamp(34px,4.8vw,60px);margin-bottom:26px;}
+.about-copy p{color:var(--text-muted);line-height:1.85;font-size:15.5px;max-width:520px;margin-bottom:16px;}
+.specialties{
+  margin-top:32px;
+  display:flex;flex-wrap:wrap;gap:10px;
+}
+.chip{
+  border:1px solid var(--line);
+  padding:9px 16px;
+  font-size:12.5px;
+  letter-spacing:.03em;
+  color:var(--text-muted);
+  border-radius:2px;
+  transition:border-color .25s ease, color .25s ease;
+}
+.chip:hover{border-color:var(--accent-soft);color:var(--text);}
 
-  /* texto visível por padrão; só fica oculto se o JS confirmar suporte a animação */
-  [data-reveal]{opacity:1;transform:none;}
-  html.js-reveal [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease;}
-  html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
+.about-visual{position:relative;margin-top:12px;}
+.about-frame{
+  position:relative;
+  aspect-ratio:4/5;
+  border:1px solid var(--line);
+  border-radius:2px;
+  background:linear-gradient(165deg,var(--surface),var(--bg-soft));
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.about-frame span{
+  font-family:var(--font-display);
+  font-size:13px;letter-spacing:.14em;color:var(--text-faint);text-transform:uppercase;
+  padding:0 20px;text-align:center;
+}
+.about-mark{
+  position:absolute;top:-18px;right:-18px;
+  width:52px;height:1px;background:var(--accent);
+}
+.about-mark::after{
+  content:"";position:absolute;top:0;right:0;
+  width:1px;height:52px;background:var(--accent);
+}
 
-  @media (max-width:920px){
-    .hero{grid-template-columns:1fr;grid-template-rows:auto auto;padding-top:90px;}
-    .hero-figure{order:1;}
-    .hero-copy{order:2;padding:40px 7vw 60px;}
-    .about-grid{grid-template-columns:1fr;gap:44px;}
-    .about-photo{order:-1;aspect-ratio:16/10;}
-    .services-grid{grid-template-columns:1fr 1fr;}
-    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;}
-    .gallery-grid .g:nth-child(1){grid-column:span 2;grid-row:span 1;}
-    .video-row{grid-template-columns:1fr 1fr;}
-    .t-grid{grid-template-columns:1fr;}
-    .section{padding:80px 6vw;}
+/* ===========================================================
+   MODALIDADES
+=========================================================== */
+.modalidades{background:var(--bg-soft);}
+.modalidades-list{border-top:1px solid var(--line);}
+.modalidade-row{
+  position:relative;
+  display:grid;
+  grid-template-columns:90px 1fr auto;
+  align-items:center;
+  gap:28px;
+  padding:34px 0;
+  border-bottom:1px solid var(--line);
+  transition:padding-left .35s ease;
+}
+.modalidade-row:hover{padding-left:14px;}
+.modalidade-num{
+  font-family:var(--font-display);
+  font-size:20px;
+  color:var(--accent-soft);
+  font-weight:600;
+}
+.modalidade-kicker{
+  display:block;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);
+  margin-bottom:8px;
+}
+.modalidade-body h3{
+  font-size:clamp(22px,2.6vw,32px);
+  text-transform:uppercase;
+  margin-bottom:8px;
+  transition:color .25s ease;
+}
+.modalidade-row:hover .modalidade-body h3{color:var(--accent-soft);}
+.modalidade-body p{color:var(--text-muted);font-size:14px;line-height:1.7;max-width:460px;}
+.modalidade-link{
+  font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text);
+  border-bottom:1px solid var(--line-strong);
+  padding-bottom:4px;
+  white-space:nowrap;
+  transition:border-color .25s ease, color .25s ease, transform .25s ease;
+  display:inline-block;
+}
+.modalidade-row:hover .modalidade-link{border-color:var(--accent);color:var(--accent);transform:translateX(4px);}
+
+/* ===========================================================
+   GALERIA
+=========================================================== */
+.gallery{background:var(--bg);}
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:8px;
+}
+.gallery-grid .g:nth-child(1){grid-column:span 2;grid-row:span 2;}
+.gallery-grid .g:nth-child(4){grid-column:span 2;}
+.g{
+  position:relative;overflow:hidden;border-radius:2px;
+  background:linear-gradient(155deg,var(--surface),var(--bg-soft));
+  border:1px solid var(--line);
+}
+.g-inner{
+  position:absolute;inset:0;
+  transition:transform .6s cubic-bezier(.2,.7,.2,1);
+}
+.g:hover .g-inner{transform:scale(1.06);}
+.g-label{
+  position:absolute;left:14px;bottom:12px;z-index:1;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-faint);
+  transition:color .3s ease;
+}
+.g:hover .g-label{color:var(--accent-soft);}
+
+/* ===========================================================
+   VÍDEOS
+=========================================================== */
+.videos{background:var(--bg-soft);}
+.videos-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.yt-link{
+  font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;
+  border-bottom:1px solid var(--line-strong);padding-bottom:4px;
+  transition:border-color .25s ease, color .25s ease;
+}
+.yt-link:hover{border-color:var(--accent);color:var(--accent-soft);}
+.video-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;}
+.video-card{
+  aspect-ratio:9/16;
+  background:linear-gradient(165deg,var(--surface),var(--bg-soft));
+  border:1px solid var(--line);
+  border-radius:2px;
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.play-btn{
+  width:50px;height:50px;border-radius:50%;
+  border:1px solid var(--line-strong);
+  display:flex;align-items:center;justify-content:center;
+  transition:.3s ease;
+}
+.video-card:hover .play-btn{background:var(--accent);border-color:var(--accent);}
+.video-card:hover .play-btn svg path{fill:#09090b;}
+.play-btn svg{width:13px;margin-left:2px;}
+.play-btn svg path{fill:var(--text);transition:fill .3s ease;}
+
+/* ===========================================================
+   DEPOIMENTOS
+=========================================================== */
+.testimonials{background:var(--bg);}
+.t-list{border-top:1px solid var(--line);}
+.t-row{
+  padding:40px 0;
+  border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:44px 1fr;gap:20px;
+}
+.t-mark{
+  font-family:var(--font-display);
+  font-size:44px;line-height:1;color:var(--accent);
+}
+.t-quote{
+  font-size:clamp(16px,1.9vw,21px);
+  line-height:1.6;
+  color:var(--text);
+  font-weight:500;
+  max-width:760px;
+  margin-bottom:16px;
+}
+.t-person{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text-faint);letter-spacing:.02em;}
+.t-person strong{color:var(--text-muted);font-weight:600;}
+.t-person .dot{width:3px;height:3px;border-radius:50%;background:var(--text-faint);}
+
+/* ===========================================================
+   CONTATO
+=========================================================== */
+.contact{
+  background:radial-gradient(circle at 25% 20%, rgba(239,101,206,.10), var(--bg) 60%);
+  text-align:center;
+}
+.contact h2{font-size:clamp(44px,8vw,96px);margin-bottom:22px;}
+.contact h2 .accent-on{color:var(--accent);}
+.contact p{color:var(--text-muted);max-width:480px;margin:0 auto 44px;font-size:15px;line-height:1.8;}
+.contact-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:60px;}
+.contact-links{display:flex;justify-content:center;gap:34px;flex-wrap:wrap;color:var(--text-faint);font-size:13px;letter-spacing:.02em;}
+.contact-links a{border-bottom:1px solid transparent;transition:.25s ease;}
+.contact-links a:hover{color:var(--accent-soft);border-color:var(--accent-soft);}
+
+/* ===========================================================
+   FOOTER
+=========================================================== */
+footer{
+  padding:32px var(--gutter);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;
+  border-top:1px solid var(--line);
+  font-size:12px;color:var(--text-faint);
+}
+.foot-brand{display:flex;align-items:center;gap:10px;}
+.foot-brand img{height:20px;width:auto;}
+.foot-brand span{font-family:var(--font-display);font-size:14px;letter-spacing:.06em;color:var(--text-muted);text-transform:uppercase;}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;}
+.foot-links a:hover{color:var(--text-muted);}
+.foot-social{display:flex;gap:22px;}
+.foot-social a:hover{color:var(--text-muted);}
+
+/* ===========================================================
+   REVEAL
+=========================================================== */
+[data-reveal]{opacity:1;transform:none;}
+html.js-reveal [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .8s ease, transform .8s ease;}
+html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
+
+/* ===========================================================
+   FLUTUAÇÃO SUTIL (somente telas de toque, sem reduced-motion)
+=========================================================== */
+@media (hover:none) and (pointer:coarse){
+  @media (prefers-reduced-motion: no-preference){
+    .hero-raphael{animation:floatY 7s ease-in-out infinite;}
+    .hero-on{animation:floatY 8.5s ease-in-out infinite reverse;}
+    @keyframes floatY{
+      0%,100%{transform:translate3d(0,0,0);}
+      50%{transform:translate3d(0,-6px,0);}
+    }
   }
-  @media (max-width:560px){
-    .services-grid{grid-template-columns:1fr;}
-    .video-row{grid-template-columns:1fr;}
-    .gallery-grid{grid-template-columns:1fr;}
-    .gallery-grid .g:nth-child(1){grid-column:span 1;}
+}
+
+/* ===========================================================
+   RESPONSIVIDADE
+=========================================================== */
+@media (max-width:980px){
+  .nav-menu{display:none;}
+  .nav-toggle{display:block;}
+  .hero-bg{object-position:66% 50%;}
+  .hero-on{object-position:70% 40%;}
+  .hero-raphael{object-position:70% 40%;}
+  .hero-scrim{
+    background:linear-gradient(180deg, rgba(9,9,11,.82) 0%, rgba(9,9,11,.38) 30%, rgba(9,9,11,.12) 52%, rgba(9,9,11,.5) 82%, rgba(9,9,11,.78) 100%);
   }
+  .hero-content{max-width:100%;justify-content:flex-start;padding-top:calc(var(--nav-h) + 30px);gap:16px;}
+  .about-grid{grid-template-columns:1fr;gap:44px;}
+  .about-visual{order:-1;max-width:420px;}
+  .modalidade-row{grid-template-columns:56px 1fr;}
+  .modalidade-link{grid-column:1/-1;justify-self:start;margin-top:4px;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px;}
+  .gallery-grid .g:nth-child(1){grid-column:span 2;grid-row:span 1;}
+  .video-row{grid-template-columns:1fr 1fr;}
+  .t-row{grid-template-columns:32px 1fr;}
+}
+@media (max-width:640px){
+  :root{--nav-h:72px;}
+  .hero-title{font-size:clamp(44px,13vw,64px);}
+  .hero-actions{flex-direction:column;align-items:flex-start;}
+  .video-row{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:1fr;}
+  .gallery-grid .g:nth-child(1),.gallery-grid .g:nth-child(4){grid-column:span 1;}
+  footer{flex-direction:column;align-items:flex-start;}
+}
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-logo">RAPHAEL BRUNO</div>
-  <a class="nav-cta" href="#contato">Fale comigo</a>
+<!-- =============================================================
+     NAVBAR
+============================================================== -->
+<nav class="nav" id="mainNav">
+  <a class="nav-logo" href="#topo" aria-label="Raphael BrunON — início">
+    <img src="assets/hero/logo-raphael-brunon.png" alt="Raphael BrunON">
+  </a>
+
+  <div class="nav-menu">
+    <div class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Aulas</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <a class="nav-cta" href="#contato">Falar com o Rapha</a>
+  </div>
+
+  <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- HERO -->
-<header class="hero">
-  <div class="glow" style="width:420px;height:420px;top:-10%;right:-8%;background:var(--wedding);animation:drift 14s ease-in-out infinite;"></div>
-  <div class="glow" style="width:340px;height:340px;bottom:-12%;left:-6%;background:var(--bike);animation:drift 18s ease-in-out infinite reverse;"></div>
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav aria-label="Menu principal">
+    <a href="#sobre">Sobre</a>
+    <a href="#servicos">Aulas</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <a class="btn btn-primary" href="#contato">Falar com o Rapha</a>
+</div>
 
-  <div class="hero-figure">
-    <span class="hero-tag">Educador Físico &amp; Bailarino</span>
-    <div class="hero-silhouette" role="img" aria-label="Fotografia de Raphael Bruno (placeholder — substituir pela foto real com fundo removido)"></div>
+<!-- =============================================================
+     HERO
+============================================================== -->
+<header class="hero" id="topo">
+  <div class="hero-stage" aria-hidden="true">
+    <img class="hero-layer hero-bg" id="heroBg" src="assets/hero/background-hero.png" alt="" loading="eager">
+    <img class="hero-layer hero-on" id="heroOn" src="assets/hero/on-hero.png" alt="" loading="eager">
+    <img class="hero-layer hero-raphael" id="heroRaphael" src="assets/hero/raphael-hero.png" alt="Raphael BrunON sorrindo e estendendo a mão para a câmera" loading="eager">
+    <div class="hero-scrim"></div>
   </div>
 
-  <div class="hero-copy">
-    <p class="eyebrow" data-reveal>Bike Indoor · Boom Dance · Boom Jump · Personal · Coreografias</p>
-    <h1 data-reveal>FALA<br><span>PEOPLE</span></h1>
-    <p class="hero-sub" data-reveal>Movimento que inspira. Experiências que transformam.</p>
-    <p class="hero-desc" data-reveal>Há anos ajudando pessoas a superarem limites, aprenderem através da dança e viverem momentos inesquecíveis. Conheça minhas modalidades e encontre a experiência ideal para você.</p>
-    <a class="btn-primary" href="#servicos" data-reveal>Conheça meu trabalho →</a>
+  <div class="hero-content" id="heroContent">
+    <p class="eyebrow" data-reveal>Professor · Coreógrafo · Criador</p>
+    <h1 class="hero-title" data-reveal>Raphael<br>Brun<span class="accent-on">on</span></h1>
+    <p class="hero-lede" data-reveal>Mais que dança,<br>uma energia real.</p>
+    <div class="hero-actions" data-reveal>
+      <a class="btn btn-primary" href="#servicos">Conheça as aulas</a>
+      <a class="btn btn-ghost" href="#sobre">Sobre mim</a>
+    </div>
   </div>
 
-  <div class="scroll-hint">Role</div>
+  <div class="hero-scrollcue" aria-hidden="true"><span></span></div>
 </header>
 
-<!-- ABOUT -->
+<div class="hero-edge" aria-hidden="true"></div>
+
+<!-- =============================================================
+     SOBRE
+============================================================== -->
 <section class="about section" id="sobre">
   <div class="section-inner about-grid">
-    <div data-reveal>
+    <div class="about-copy" data-reveal>
       <p class="eyebrow">Quem é Raphael</p>
       <h2>Ensinar é a<br>minha forma de mover pessoas.</h2>
       <p>Tudo começou com uma paixão simples: o movimento. Ao longo dos anos, essa paixão virou profissão — e a profissão virou propósito. Como professor de Educação Física, encontrei na dança, no ritmo e na performance uma forma diferente de ensinar: uma que transforma corpo e mente ao mesmo tempo.</p>
@@ -438,127 +624,169 @@
         <span class="chip">Coreografias para Debutantes</span>
       </div>
     </div>
-    <div class="about-photo" data-reveal>
-      <span>Foto em aula — a inserir</span>
+    <div class="about-visual" data-reveal>
+      <div class="about-frame">
+        <!-- substituir por foto real em assets/images/sobre/ -->
+        <span>Foto em aula — em breve</span>
+      </div>
+      <div class="about-mark" aria-hidden="true"></div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section class="services section" id="servicos">
+<!-- =============================================================
+     MODALIDADES
+============================================================== -->
+<section class="modalidades section" id="servicos">
   <div class="section-inner">
-    <div class="services-head" data-reveal>
+    <div class="section-head" data-reveal>
       <p class="eyebrow">Modalidades</p>
       <h2>Encontre o seu ritmo.</h2>
     </div>
-    <div class="services-grid">
-      <div class="service-card" data-c="bike" data-reveal>
-        <div class="service-num">01 — Ciclismo Indoor</div>
-        <h3>Bike Indoor</h3>
-        <p>Aulas em ritmo, com música e cadência que levam sua resistência a outro nível.</p>
-        <a class="service-link" href="#contato">Agendar aula →</a>
-      </div>
-      <div class="service-card" data-c="dance" data-reveal>
-        <div class="service-num">02 — Dança &amp; Ritmo</div>
-        <h3>Boom Dance</h3>
-        <p>Coreografias envolventes que unem diversão, técnica e queima calórica.</p>
-        <a class="service-link" href="#contato">Agendar aula →</a>
-      </div>
-      <div class="service-card" data-c="jump" data-reveal>
-        <div class="service-num">03 — Alta Performance</div>
-        <h3>Boom Jump</h3>
-        <p>Treino cardiovascular intenso em mini trampolins, leve para as articulações.</p>
-        <a class="service-link" href="#contato">Agendar aula →</a>
-      </div>
-      <div class="service-card" data-c="personal" data-reveal>
-        <div class="service-num">04 — Musculação</div>
-        <h3>Personal Trainer</h3>
-        <p>Treinos individuais, com plano sob medida para seus objetivos e evolução.</p>
-        <a class="service-link" href="#contato">Agendar avaliação →</a>
-      </div>
-      <div class="service-card" data-c="wedding" data-reveal>
-        <div class="service-num">05 — Casamentos</div>
-        <h3>Coreografias para Casamentos</h3>
-        <p>A primeira dança dos noivos, ensaiada com carinho para o dia mais especial.</p>
-        <a class="service-link" href="#contato">Falar sobre meu casamento →</a>
-      </div>
-      <div class="service-card" data-c="deb" data-reveal>
-        <div class="service-num">06 — Debutantes</div>
-        <h3>Coreografias para Debutantes</h3>
-        <p>Valsas e coreografias de 15 anos, criadas para brilhar no salão.</p>
-        <a class="service-link" href="#contato">Falar sobre meus 15 anos →</a>
-      </div>
-    </div>
+    <ul class="modalidades-list">
+      <li class="modalidade-row" data-reveal>
+        <span class="modalidade-num">01</span>
+        <div class="modalidade-body">
+          <span class="modalidade-kicker">Ciclismo Indoor</span>
+          <h3>Bike Indoor</h3>
+          <p>Aulas em ritmo, com música e cadência que levam sua resistência a outro nível.</p>
+        </div>
+        <a class="modalidade-link" href="#contato">Agendar aula →</a>
+      </li>
+      <li class="modalidade-row" data-reveal>
+        <span class="modalidade-num">02</span>
+        <div class="modalidade-body">
+          <span class="modalidade-kicker">Dança &amp; Ritmo</span>
+          <h3>Boom Dance</h3>
+          <p>Coreografias envolventes que unem diversão, técnica e queima calórica.</p>
+        </div>
+        <a class="modalidade-link" href="#contato">Agendar aula →</a>
+      </li>
+      <li class="modalidade-row" data-reveal>
+        <span class="modalidade-num">03</span>
+        <div class="modalidade-body">
+          <span class="modalidade-kicker">Alta Performance</span>
+          <h3>Boom Jump</h3>
+          <p>Treino cardiovascular intenso em mini trampolins, leve para as articulações.</p>
+        </div>
+        <a class="modalidade-link" href="#contato">Agendar aula →</a>
+      </li>
+      <li class="modalidade-row" data-reveal>
+        <span class="modalidade-num">04</span>
+        <div class="modalidade-body">
+          <span class="modalidade-kicker">Musculação</span>
+          <h3>Personal Trainer</h3>
+          <p>Treinos individuais, com plano sob medida para seus objetivos e evolução.</p>
+        </div>
+        <a class="modalidade-link" href="#contato">Agendar avaliação →</a>
+      </li>
+      <li class="modalidade-row" data-reveal>
+        <span class="modalidade-num">05</span>
+        <div class="modalidade-body">
+          <span class="modalidade-kicker">Casamentos</span>
+          <h3>Coreografias para Casamentos</h3>
+          <p>A primeira dança dos noivos, ensaiada com carinho para o dia mais especial.</p>
+        </div>
+        <a class="modalidade-link" href="#contato">Falar sobre meu casamento →</a>
+      </li>
+      <li class="modalidade-row" data-reveal>
+        <span class="modalidade-num">06</span>
+        <div class="modalidade-body">
+          <span class="modalidade-kicker">Debutantes</span>
+          <h3>Coreografias para Debutantes</h3>
+          <p>Valsas e coreografias de 15 anos, criadas para brilhar no salão.</p>
+        </div>
+        <a class="modalidade-link" href="#contato">Falar sobre meus 15 anos →</a>
+      </li>
+    </ul>
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- =============================================================
+     GALERIA
+============================================================== -->
 <section class="gallery section" id="galeria">
   <div class="section-inner">
     <p class="eyebrow" data-reveal>Galeria</p>
-    <h2 style="font-size:clamp(36px,5vw,58px);margin:14px 0 46px;" data-reveal>Momentos em movimento.</h2>
+    <h2 style="font-size:clamp(34px,4.6vw,58px);margin:14px 0 46px;" data-reveal>Momentos em movimento.</h2>
     <div class="gallery-grid" data-reveal>
-      <div class="g"><div class="g-inner">Bike Indoor</div></div>
-      <div class="g"><div class="g-inner">Boom Dance</div></div>
-      <div class="g"><div class="g-inner">Personal</div></div>
-      <div class="g"><div class="g-inner">Casamentos</div></div>
-      <div class="g"><div class="g-inner">Boom Jump</div></div>
-      <div class="g"><div class="g-inner">Debutantes</div></div>
+      <!-- substituir os fundos por fotos reais em assets/images/galeria/ -->
+      <div class="g"><div class="g-inner"></div><span class="g-label">Bike Indoor</span></div>
+      <div class="g"><div class="g-inner"></div><span class="g-label">Boom Dance</span></div>
+      <div class="g"><div class="g-inner"></div><span class="g-label">Personal</span></div>
+      <div class="g"><div class="g-inner"></div><span class="g-label">Casamentos</span></div>
+      <div class="g"><div class="g-inner"></div><span class="g-label">Boom Jump</span></div>
+      <div class="g"><div class="g-inner"></div><span class="g-label">Debutantes</span></div>
     </div>
   </div>
 </section>
 
-<!-- VIDEOS -->
+<!-- =============================================================
+     VÍDEOS
+============================================================== -->
 <section class="videos section" id="videos">
   <div class="section-inner">
     <div class="videos-head" data-reveal>
       <div>
         <p class="eyebrow">Conteúdo</p>
-        <h2>No ritmo do canal.</h2>
+        <h2 style="font-size:clamp(32px,4.4vw,52px);margin-top:14px;">No ritmo do canal.</h2>
       </div>
-      <a class="yt-link" href="#" target="_blank" rel="noopener">Ver canal no YouTube →</a>
+      <a class="yt-link" href="https://www.youtube.com/@BoomCompanyOficial" target="_blank" rel="noopener">Ver canal no YouTube →</a>
     </div>
     <div class="video-row">
-      <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path fill="white" d="M8 5v14l11-7z"/></svg></div></div>
-      <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path fill="white" d="M8 5v14l11-7z"/></svg></div></div>
-      <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path fill="white" d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- =============================================================
+     DEPOIMENTOS
+============================================================== -->
 <section class="testimonials section" id="depoimentos">
   <div class="section-inner">
-    <div class="t-head" data-reveal>
+    <div class="section-head" data-reveal>
       <p class="eyebrow">Depoimentos</p>
       <h2>Quem já sentiu, recomenda.</h2>
     </div>
-    <div class="t-grid">
-      <div class="t-card" data-reveal>
-        <p class="t-quote">"Entrei sem confiança nenhuma e hoje não perco uma aula de Bike. O Raphael tem um jeito único de motivar."</p>
-        <div class="t-person"><div class="t-avatar"></div><div><div class="t-name">Aluna, Bike Indoor</div><div class="t-role">Aluna há 8 meses</div></div></div>
+    <div class="t-list">
+      <div class="t-row" data-reveal>
+        <span class="t-mark" aria-hidden="true">“</span>
+        <div>
+          <p class="t-quote">Entrei sem confiança nenhuma e hoje não perco uma aula de Bike. O Raphael tem um jeito único de motivar.</p>
+          <div class="t-person"><strong>Aluna, Bike Indoor</strong><span class="dot"></span><span>Aluna há 8 meses</span></div>
+        </div>
       </div>
-      <div class="t-card" data-reveal>
-        <p class="t-quote">"A coreografia do nosso casamento foi o momento mais comentado da festa. Profissionalismo do início ao fim."</p>
-        <div class="t-person"><div class="t-avatar"></div><div><div class="t-name">Noivos</div><div class="t-role">Coreografia de casamento</div></div></div>
+      <div class="t-row" data-reveal>
+        <span class="t-mark" aria-hidden="true">“</span>
+        <div>
+          <p class="t-quote">A coreografia do nosso casamento foi o momento mais comentado da festa. Profissionalismo do início ao fim.</p>
+          <div class="t-person"><strong>Noivos</strong><span class="dot"></span><span>Coreografia de casamento</span></div>
+        </div>
       </div>
-      <div class="t-card" data-reveal>
-        <p class="t-quote">"O personal me ajudou a entender meu corpo de um jeito que nenhum outro treino tinha conseguido."</p>
-        <div class="t-person"><div class="t-avatar"></div><div><div class="t-name">Aluno, Personal Trainer</div><div class="t-role">Aluno há 1 ano</div></div></div>
+      <div class="t-row" data-reveal>
+        <span class="t-mark" aria-hidden="true">“</span>
+        <div>
+          <p class="t-quote">O personal me ajudou a entender meu corpo de um jeito que nenhum outro treino tinha conseguido.</p>
+          <div class="t-person"><strong>Aluno, Personal Trainer</strong><span class="dot"></span><span>Aluno há 1 ano</span></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- =============================================================
+     CONTATO
+============================================================== -->
 <section class="contact section" id="contato">
   <div class="section-inner">
     <p class="eyebrow" data-reveal>Vamos treinar</p>
-    <h2 data-reveal>Bora<br>começar?</h2>
+    <h2 data-reveal>Bora<br><span class="accent-on">começar?</span></h2>
     <p data-reveal>Fale comigo agora mesmo e encontre a modalidade certa para o seu momento — seja para treinar, dançar ou brilhar na pista.</p>
     <div class="contact-actions" data-reveal>
-      <a class="btn-primary" href="https://wa.me/5500000000000" target="_blank" rel="noopener">Chamar no WhatsApp</a>
-      <a class="btn-ghost" href="#servicos">Ver modalidades</a>
+      <a class="btn btn-primary" href="https://wa.me/5500000000000" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+      <a class="btn btn-ghost" href="#servicos">Ver modalidades</a>
     </div>
     <div class="contact-links" data-reveal>
       <a href="https://www.instagram.com/raphaelbrunon/?hl=en" target="_blank" rel="noopener">Instagram</a>
@@ -569,27 +797,219 @@
   </div>
 </section>
 
+<!-- =============================================================
+     FOOTER
+============================================================== -->
 <footer>
-  <div class="foot-logo">RB</div>
-  <div>© 2026 Raphael Bruno. Todos os direitos reservados.</div>
+  <a class="foot-brand" href="#topo" aria-label="Raphael BrunON — início">
+    <img src="assets/hero/logo-raphael-brunon.png" alt="">
+    <span>Raphael BrunON</span>
+  </a>
+  <div class="foot-links">
+    <a href="#sobre">Sobre</a>
+    <a href="#servicos">Aulas</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#contato">Contato</a>
+  </div>
   <div class="foot-social">
     <a href="https://www.instagram.com/raphaelbrunon/?hl=en" target="_blank" rel="noopener">Instagram</a>
     <a href="https://www.youtube.com/@BoomCompanyOficial" target="_blank" rel="noopener">YouTube</a>
-    <a href="#" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="https://wa.me/5500000000000" target="_blank" rel="noopener">WhatsApp</a>
   </div>
+  <div>© 2026 Raphael BrunON. Todos os direitos reservados.</div>
 </footer>
 
 <script>
+(function(){
+  "use strict";
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ---------------------------------------------------------
+     NAVBAR — estado ao rolar
+  --------------------------------------------------------- */
+  var nav = document.getElementById('mainNav');
+  function updateNavState(){
+    if(window.scrollY > 40){ nav.classList.add('is-scrolled'); }
+    else{ nav.classList.remove('is-scrolled'); }
+  }
+
+  /* ---------------------------------------------------------
+     MENU MOBILE
+  --------------------------------------------------------- */
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var mobileLinks = mobileMenu.querySelectorAll('a');
+
+  function openMenu(){
+    mobileMenu.classList.add('is-open');
+    mobileMenu.setAttribute('aria-hidden','false');
+    navToggle.setAttribute('aria-expanded','true');
+    navToggle.setAttribute('aria-label','Fechar menu');
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    mobileMenu.classList.remove('is-open');
+    mobileMenu.setAttribute('aria-hidden','true');
+    navToggle.setAttribute('aria-expanded','false');
+    navToggle.setAttribute('aria-label','Abrir menu');
+    document.documentElement.style.overflow = '';
+  }
+  navToggle.addEventListener('click', function(){
+    var isOpen = navToggle.getAttribute('aria-expanded') === 'true';
+    if(isOpen){ closeMenu(); } else { openMenu(); }
+  });
+  mobileLinks.forEach(function(a){ a.addEventListener('click', closeMenu); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeMenu(); }
+  });
+
+  /* ---------------------------------------------------------
+     REVEAL AO ENTRAR NO VIEWPORT
+  --------------------------------------------------------- */
   if('IntersectionObserver' in window){
     document.documentElement.classList.add('js-reveal');
-    const els = document.querySelectorAll('[data-reveal]');
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    var revealEls = document.querySelectorAll('[data-reveal]');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
       });
     }, {threshold:0.15});
-    els.forEach(el=>io.observe(el));
+    revealEls.forEach(function(el){ io.observe(el); });
   }
+
+  /* ---------------------------------------------------------
+     HERO — parallax de mouse + scroll de saída do Raphael
+  --------------------------------------------------------- */
+  var hero = document.getElementById('topo');
+  var heroBg = document.getElementById('heroBg');
+  var heroOn = document.getElementById('heroOn');
+  var heroRaphael = document.getElementById('heroRaphael');
+  var heroContent = document.getElementById('heroContent');
+
+  var state = {
+    targetMX: 0, targetMY: 0,   // alvo do parallax de mouse (-1 a 1)
+    curMX: 0, curMY: 0,         // valor suavizado atual
+    scrollProgress: 0,          // 0 a 1 ao longo da altura da hero
+    heroHeight: hero.offsetHeight,
+    ticking: false,
+    rafId: null,
+    active: false
+  };
+
+  function onPointerMove(e){
+    if(!isFinePointer || reduceMotion) return;
+    var rect = hero.getBoundingClientRect();
+    var x = (e.clientX - rect.left) / rect.width;   // 0..1
+    var y = (e.clientY - rect.top) / rect.height;   // 0..1
+    state.targetMX = (x - 0.5) * 2;                 // -1..1
+    state.targetMY = (y - 0.5) * 2;                 // -1..1
+  }
+  function onPointerLeave(){
+    state.targetMX = 0;
+    state.targetMY = 0;
+  }
+
+  function computeScrollProgress(){
+    var rect = hero.getBoundingClientRect();
+    var p = (0 - rect.top) / state.heroHeight;
+    if(p < 0) p = 0;
+    if(p > 1) p = 1;
+    state.scrollProgress = p;
+  }
+
+  function render(){
+    if(!reduceMotion){
+      // suaviza o parallax do mouse (lerp)
+      state.curMX += (state.targetMX - state.curMX) * 0.08;
+      state.curMY += (state.targetMY - state.curMY) * 0.08;
+
+      var p = state.scrollProgress;
+      var mx = state.curMX, my = state.curMY;
+
+      // background: quase nada de parallax, sem movimento de scroll
+      var bgX = mx * 3, bgY = my * 3;
+      heroBg.style.transform = 'translate3d(' + bgX.toFixed(2) + 'px,' + bgY.toFixed(2) + 'px,0)';
+
+      // ON: parallax leve + recua e reduz um pouco no scroll
+      var onX = mx * 8 + p * -20;
+      var onY = my * 8;
+      var onScale = 1 - p * 0.04;
+      heroOn.style.transform = 'translate3d(' + onX.toFixed(2) + 'px,' + onY.toFixed(2) + 'px,0) scale(' + onScale.toFixed(3) + ')';
+
+      // Raphael: parallax mais forte + avança, desce e sai de cena no scroll
+      var rX = mx * 18 + p * 100;
+      var rY = my * 18 + p * 50;
+      var rScale = 1 + p * 0.07;
+      var rRot = mx * 1.6;
+      heroRaphael.style.transform = 'translate3d(' + rX.toFixed(2) + 'px,' + rY.toFixed(2) + 'px,0) scale(' + rScale.toFixed(3) + ') rotate(' + rRot.toFixed(2) + 'deg)';
+
+      // texto: sobe e desaparece
+      var textY = p * -26;
+      var textOpacity = Math.max(0, 1 - p * 1.6);
+      heroContent.style.transform = 'translate3d(0,' + textY.toFixed(2) + 'px,0)';
+      heroContent.style.opacity = textOpacity.toFixed(3);
+    }
+
+    if(state.active){
+      state.rafId = requestAnimationFrame(render);
+    } else {
+      state.rafId = null;
+    }
+  }
+
+  function startLoop(){
+    if(!state.active){
+      state.active = true;
+      state.rafId = requestAnimationFrame(render);
+    }
+  }
+  function stopLoop(){
+    state.active = false;
+    if(state.rafId){ cancelAnimationFrame(state.rafId); state.rafId = null; }
+  }
+
+  function onScroll(){
+    if(!state.ticking){
+      state.ticking = true;
+      requestAnimationFrame(function(){
+        updateNavState();
+        computeScrollProgress();
+        state.ticking = false;
+      });
+    }
+  }
+  function onResize(){
+    state.heroHeight = hero.offsetHeight;
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onResize, {passive:true});
+  updateNavState();
+  computeScrollProgress();
+
+  if(isFinePointer && !reduceMotion){
+    hero.addEventListener('pointermove', onPointerMove, {passive:true});
+    hero.addEventListener('pointerleave', onPointerLeave, {passive:true});
+  }
+
+  // só roda o loop de animação enquanto a hero está visível (performance)
+  if(!reduceMotion && 'IntersectionObserver' in window){
+    var heroObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ startLoop(); } else { stopLoop(); }
+      });
+    });
+    heroObserver.observe(hero);
+  } else if(!reduceMotion){
+    startLoop();
+  }
+
+})();
 </script>
 
 </body>
