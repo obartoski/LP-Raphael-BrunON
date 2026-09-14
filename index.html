@@ -109,7 +109,7 @@ h1,h2,h3{
 }
 .nav-left{display:flex;align-items:center;gap:52px;}
 .nav-logo{display:flex;align-items:center;}
-.nav-logo img{height:42px;width:auto;}
+.nav-logo img{height:46px;width:auto;}
 .nav-links{display:flex;align-items:center;gap:34px;}
 .nav-links a{
   position:relative;
@@ -208,11 +208,12 @@ h1,h2,h3{
 }
 .hero-bg{object-position:58% 50%;z-index:0;}
 .hero-on{
-  object-position:58% 46%;
+  object-position:64% 40%;
   z-index:1;
-  --on-x:70px;
-  --on-scale:0.78;
-  transform-origin:72% 50%;
+  opacity:.85;
+  --on-x:230px;
+  --on-scale:0.3;
+  transform-origin:92% 50%;
   transform:translate3d(var(--on-x),0,0) scale(var(--on-scale));
 }
 .hero-raphael{object-position:58% 46%;z-index:2;}
@@ -246,6 +247,14 @@ h1,h2,h3{
   max-width:360px;
 }
 .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;}
+.hero-social{
+  display:flex;align-items:center;gap:10px;
+  font-size:12.5px;
+  color:var(--text-faint);
+  margin-top:6px;
+}
+.hero-social-line{width:20px;height:1px;background:var(--accent-soft);flex:0 0 auto;}
+.hero-social strong{font-family:var(--font-display);color:var(--accent-soft);font-weight:700;font-size:13px;}
 
 .btn{
   display:inline-flex;align-items:center;gap:10px;
@@ -341,84 +350,125 @@ h1,h2,h3{
 .modalidades{background:var(--bg-soft);}
 .modalidades-list{border-top:1px solid var(--line);}
 .modalidade-row{
+  --row-accent:var(--accent-soft);
   position:relative;
   display:grid;
-  grid-template-columns:90px 1fr auto;
+  grid-template-columns:56px 1fr auto;
   align-items:center;
-  gap:28px;
-  padding:34px 0;
+  gap:22px;
+  padding:19px 0 19px 14px;
   border-bottom:1px solid var(--line);
-  transition:padding-left .35s ease;
+  transition:padding-left .3s ease, background .3s ease;
 }
-.modalidade-row:hover{padding-left:14px;}
+.modalidade-row::before{
+  content:"";
+  position:absolute;left:0;top:10%;bottom:10%;width:2px;
+  background:var(--row-accent);
+  opacity:.35;
+  transition:opacity .3s ease;
+}
+.modalidade-row:hover{padding-left:20px;}
+.modalidade-row:hover::before{opacity:1;}
 .modalidade-num{
   font-family:var(--font-display);
-  font-size:20px;
-  color:var(--accent-soft);
+  font-size:17px;
+  color:var(--row-accent);
   font-weight:600;
 }
 .modalidade-kicker{
   display:block;
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);
-  margin-bottom:8px;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);
+  margin-bottom:3px;
 }
 .modalidade-body h3{
-  font-size:clamp(22px,2.6vw,32px);
+  font-size:clamp(19px,2.2vw,26px);
   text-transform:uppercase;
-  margin-bottom:8px;
+  margin-bottom:4px;
   transition:color .25s ease;
 }
-.modalidade-row:hover .modalidade-body h3{color:var(--accent-soft);}
-.modalidade-body p{color:var(--text-muted);font-size:14px;line-height:1.7;max-width:460px;}
+.modalidade-row:hover .modalidade-body h3{color:var(--row-accent);}
+.modalidade-body p{color:var(--text-muted);font-size:13.5px;line-height:1.6;max-width:440px;}
 .modalidade-link{
-  font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--text);
-  border-bottom:1px solid var(--line-strong);
+  font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--row-accent);
+  border-bottom:1px solid currentColor;
   padding-bottom:4px;
   white-space:nowrap;
-  transition:border-color .25s ease, color .25s ease, transform .25s ease;
+  transition:opacity .3s ease, transform .3s ease;
   display:inline-block;
+  opacity:0;
+  transform:translateX(-8px);
 }
-.modalidade-row:hover .modalidade-link{border-color:var(--accent);color:var(--accent);transform:translateX(4px);}
+.modalidade-row:hover .modalidade-link,
+.modalidade-row:focus-within .modalidade-link{opacity:1;transform:translateX(0);}
 
 /* ===========================================================
    GALERIA
 =========================================================== */
 .gallery{background:var(--bg);}
-.gallery-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:8px;
+.carousel{position:relative;}
+.car-track{
+  display:flex;
+  gap:20px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:10px 0 34px;
+  cursor:grab;
+  user-select:none;
 }
-.gallery-grid .g:nth-child(1){grid-column:span 2;grid-row:span 2;}
-.gallery-grid .g:nth-child(4){grid-column:span 2;}
-.g{
-  position:relative;overflow:hidden;border-radius:2px;
+.car-track::-webkit-scrollbar{display:none;}
+.car-track:active{cursor:grabbing;}
+.car-track::before,.car-track::after{content:"";flex:0 0 auto;width:calc((100% - min(560px,72vw))/2);}
+.car-slide{
+  flex:0 0 auto;
+  width:min(560px,72vw);
+  aspect-ratio:4/5;
+  scroll-snap-align:center;
+  position:relative;
+  overflow:hidden;
+  border-radius:3px;
   background:linear-gradient(155deg,var(--surface),var(--bg-soft));
   border:1px solid var(--line);
+  transition:transform .15s ease-out, opacity .15s ease-out;
+  will-change:transform;
 }
-.g-inner{
-  position:absolute;inset:0;
-  transition:transform .6s cubic-bezier(.2,.7,.2,1);
-}
-.g:hover .g-inner{transform:scale(1.06);}
-.g-label{
-  position:absolute;left:14px;bottom:12px;z-index:1;
+.car-caption{
+  position:absolute;left:16px;bottom:14px;z-index:1;
   font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--text-faint);
-  transition:color .3s ease;
 }
-.g:hover .g-label{color:var(--accent-soft);}
+.car-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:46px;height:46px;border-radius:50%;
+  border:1px solid var(--line-strong);
+  background:rgba(9,9,11,.55);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  font-size:19px;color:var(--text);
+  z-index:2;
+  transition:border-color .25s ease, color .25s ease;
+}
+.car-arrow:hover{border-color:var(--accent);color:var(--accent-soft);}
+.car-prev{left:6px;}
+.car-next{right:6px;}
+@media (max-width:640px){
+  .car-arrow{display:none;}
+}
 
 /* ===========================================================
    VÍDEOS
 =========================================================== */
 .videos{background:var(--bg-soft);}
 .videos-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;}
-.yt-link{
+.ig-link{
   font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;
   border-bottom:1px solid var(--line-strong);padding-bottom:4px;
   transition:border-color .25s ease, color .25s ease;
 }
-.yt-link:hover{border-color:var(--accent);color:var(--accent-soft);}
+.ig-link:hover{border-color:var(--accent);color:var(--accent-soft);}
 .video-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;}
 .video-card{
   aspect-ratio:9/16;
@@ -444,27 +494,23 @@ h1,h2,h3{
    DEPOIMENTOS
 =========================================================== */
 .testimonials{background:var(--bg);}
-.t-list{border-top:1px solid var(--line);}
-.t-row{
-  padding:40px 0;
-  border-bottom:1px solid var(--line);
-  display:grid;grid-template-columns:44px 1fr;gap:20px;
+.t-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
 }
-.t-mark{
-  font-family:var(--font-display);
-  font-size:44px;line-height:1;color:var(--accent);
+.t-card{
+  background:var(--bg);
+  padding:32px 28px;
+  display:flex;flex-direction:column;gap:16px;
 }
 .t-quote{
-  font-size:clamp(16px,1.9vw,21px);
+  font-size:15.5px;
   line-height:1.6;
   color:var(--text);
   font-weight:500;
-  max-width:760px;
-  margin-bottom:16px;
 }
-.t-person{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text-faint);letter-spacing:.02em;}
-.t-person strong{color:var(--text-muted);font-weight:600;}
-.t-person .dot{width:3px;height:3px;border-radius:50%;background:var(--text-faint);}
+.t-tag{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-faint);letter-spacing:.02em;margin-top:auto;}
+.t-tag .dot{width:3px;height:3px;border-radius:50%;background:var(--text-faint);flex:0 0 auto;}
 
 /* ===========================================================
    CONTATO
@@ -526,9 +572,9 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   .nav-links{display:none;}
   .nav-cta{display:none;}
   .nav-toggle{display:block;}
-  .nav-logo img{height:34px;}
+  .nav-logo img{height:36px;}
   .hero-bg{object-position:66% 50%;}
-  .hero-on{object-position:70% 40%;--on-x:34px;--on-scale:0.7;}
+  .hero-on{object-position:82% 36%;--on-x:70px;--on-scale:0.42;}
   .hero-raphael{object-position:70% 40%;}
   .hero-scrim{
     background:linear-gradient(180deg, rgba(9,9,11,.82) 0%, rgba(9,9,11,.38) 30%, rgba(9,9,11,.12) 52%, rgba(9,9,11,.5) 82%, rgba(9,9,11,.78) 100%);
@@ -536,20 +582,16 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   .hero-content{max-width:100%;justify-content:flex-start;padding-top:calc(var(--nav-h) + 30px);gap:16px;}
   .about-grid{grid-template-columns:1fr;gap:44px;}
   .about-visual{order:-1;max-width:420px;}
-  .modalidade-row{grid-template-columns:56px 1fr;}
-  .modalidade-link{grid-column:1/-1;justify-self:start;margin-top:4px;}
-  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px;}
-  .gallery-grid .g:nth-child(1){grid-column:span 2;grid-row:span 1;}
+  .modalidade-row{grid-template-columns:44px 1fr;}
+  .modalidade-link{grid-column:1/-1;justify-self:start;margin-top:2px;opacity:1;transform:none;}
   .video-row{grid-template-columns:1fr 1fr;}
-  .t-row{grid-template-columns:32px 1fr;}
+  .t-grid{grid-template-columns:1fr;}
 }
 @media (max-width:640px){
   :root{--nav-h:72px;}
   .hero-title{font-size:clamp(44px,13vw,64px);}
   .hero-actions{flex-direction:column;align-items:flex-start;}
   .video-row{grid-template-columns:1fr;}
-  .gallery-grid{grid-template-columns:1fr;}
-  .gallery-grid .g:nth-child(1),.gallery-grid .g:nth-child(4){grid-column:span 1;}
   footer{flex-direction:column;align-items:flex-start;}
 }
 </style>
@@ -572,7 +614,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     </div>
   </div>
 
-  <a class="nav-cta" href="#contato">Agendar aula</a>
+  <a class="nav-cta" href="#contato">Falar com o Raphael</a>
 
   <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menu">
     <span></span><span></span><span></span>
@@ -586,7 +628,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     <a href="#galeria">Galeria</a>
     <a href="#contato">Contato</a>
   </nav>
-  <a class="btn btn-primary" href="#contato">Agendar aula</a>
+  <a class="btn btn-primary" href="#contato">Falar com o Raphael</a>
 </div>
 
 <!-- =============================================================
@@ -608,6 +650,10 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <a class="btn btn-primary" href="#servicos">Conheça as aulas</a>
       <a class="btn btn-ghost" href="#sobre">Sobre mim</a>
     </div>
+    <p class="hero-social" data-reveal>
+      <span class="hero-social-line" aria-hidden="true"></span>
+      <strong>+400k</strong>&nbsp;seguidores nas redes
+    </p>
   </div>
 
   <div class="hero-scrollcue" aria-hidden="true"><span></span></div>
@@ -655,59 +701,59 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <h2>Encontre o seu ritmo.</h2>
     </div>
     <ul class="modalidades-list">
-      <li class="modalidade-row" data-reveal>
+      <li class="modalidade-row" data-reveal style="--row-accent:#4f9cf6;">
         <span class="modalidade-num">01</span>
         <div class="modalidade-body">
           <span class="modalidade-kicker">Ciclismo Indoor</span>
           <h3>Bike Indoor</h3>
           <p>Aulas em ritmo, com música e cadência que levam sua resistência a outro nível.</p>
         </div>
-        <a class="modalidade-link" href="#contato">Agendar aula →</a>
+        <a class="modalidade-link" href="#contato">Saiba mais →</a>
       </li>
-      <li class="modalidade-row" data-reveal>
+      <li class="modalidade-row" data-reveal style="--row-accent:#a179f2;">
         <span class="modalidade-num">02</span>
         <div class="modalidade-body">
           <span class="modalidade-kicker">Dança &amp; Ritmo</span>
           <h3>Boom Dance</h3>
           <p>Coreografias envolventes que unem diversão, técnica e queima calórica.</p>
         </div>
-        <a class="modalidade-link" href="#contato">Agendar aula →</a>
+        <a class="modalidade-link" href="#contato">Saiba mais →</a>
       </li>
-      <li class="modalidade-row" data-reveal>
+      <li class="modalidade-row" data-reveal style="--row-accent:#3fd18a;">
         <span class="modalidade-num">03</span>
         <div class="modalidade-body">
           <span class="modalidade-kicker">Alta Performance</span>
           <h3>Boom Jump</h3>
           <p>Treino cardiovascular intenso em mini trampolins, leve para as articulações.</p>
         </div>
-        <a class="modalidade-link" href="#contato">Agendar aula →</a>
+        <a class="modalidade-link" href="#contato">Saiba mais →</a>
       </li>
-      <li class="modalidade-row" data-reveal>
+      <li class="modalidade-row" data-reveal style="--row-accent:#f2705f;">
         <span class="modalidade-num">04</span>
         <div class="modalidade-body">
           <span class="modalidade-kicker">Musculação</span>
           <h3>Personal Trainer</h3>
           <p>Treinos individuais, com plano sob medida para seus objetivos e evolução.</p>
         </div>
-        <a class="modalidade-link" href="#contato">Agendar avaliação →</a>
+        <a class="modalidade-link" href="#contato">Saiba mais →</a>
       </li>
-      <li class="modalidade-row" data-reveal>
+      <li class="modalidade-row" data-reveal style="--row-accent:#dab35c;">
         <span class="modalidade-num">05</span>
         <div class="modalidade-body">
           <span class="modalidade-kicker">Casamentos</span>
           <h3>Coreografias para Casamentos</h3>
           <p>A primeira dança dos noivos, ensaiada com carinho para o dia mais especial.</p>
         </div>
-        <a class="modalidade-link" href="#contato">Falar sobre meu casamento →</a>
+        <a class="modalidade-link" href="#contato">Saiba mais →</a>
       </li>
-      <li class="modalidade-row" data-reveal>
+      <li class="modalidade-row" data-reveal style="--row-accent:#57d6cf;">
         <span class="modalidade-num">06</span>
         <div class="modalidade-body">
           <span class="modalidade-kicker">Debutantes</span>
           <h3>Coreografias para Debutantes</h3>
           <p>Valsas e coreografias de 15 anos, criadas para brilhar no salão.</p>
         </div>
-        <a class="modalidade-link" href="#contato">Falar sobre meus 15 anos →</a>
+        <a class="modalidade-link" href="#contato">Saiba mais →</a>
       </li>
     </ul>
   </div>
@@ -719,15 +765,19 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
 <section class="gallery section" id="galeria">
   <div class="section-inner">
     <p class="eyebrow" data-reveal>Galeria</p>
-    <h2 style="font-size:clamp(34px,4.6vw,58px);margin:14px 0 46px;" data-reveal>Momentos em movimento.</h2>
-    <div class="gallery-grid" data-reveal>
-      <!-- substituir os fundos por fotos reais em assets/images/galeria/ -->
-      <div class="g"><div class="g-inner"></div><span class="g-label">Bike Indoor</span></div>
-      <div class="g"><div class="g-inner"></div><span class="g-label">Boom Dance</span></div>
-      <div class="g"><div class="g-inner"></div><span class="g-label">Personal</span></div>
-      <div class="g"><div class="g-inner"></div><span class="g-label">Casamentos</span></div>
-      <div class="g"><div class="g-inner"></div><span class="g-label">Boom Jump</span></div>
-      <div class="g"><div class="g-inner"></div><span class="g-label">Debutantes</span></div>
+    <h2 style="font-size:clamp(34px,4.6vw,58px);margin:14px 0 40px;" data-reveal>Momentos em movimento.</h2>
+    <div class="carousel" data-reveal>
+      <button class="car-arrow car-prev" type="button" aria-label="Foto anterior">‹</button>
+      <div class="car-track" id="carTrack" tabindex="0" aria-label="Galeria de fotos — arraste ou use as setas para navegar">
+        <!-- substituir os fundos por fotos reais em assets/images/galeria/ -->
+        <div class="car-slide"><span class="car-caption">Bike Indoor</span></div>
+        <div class="car-slide"><span class="car-caption">Boom Dance</span></div>
+        <div class="car-slide"><span class="car-caption">Personal</span></div>
+        <div class="car-slide"><span class="car-caption">Casamentos</span></div>
+        <div class="car-slide"><span class="car-caption">Boom Jump</span></div>
+        <div class="car-slide"><span class="car-caption">Debutantes</span></div>
+      </div>
+      <button class="car-arrow car-next" type="button" aria-label="Próxima foto">›</button>
     </div>
   </div>
 </section>
@@ -739,10 +789,10 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   <div class="section-inner">
     <div class="videos-head" data-reveal>
       <div>
-        <p class="eyebrow">Conteúdo</p>
-        <h2 style="font-size:clamp(32px,4.4vw,52px);margin-top:14px;">No ritmo do canal.</h2>
+        <p class="eyebrow">Instagram</p>
+        <h2 style="font-size:clamp(32px,4.4vw,52px);margin-top:14px;">No ritmo do feed.</h2>
       </div>
-      <a class="yt-link" href="https://www.youtube.com/@BoomCompanyOficial" target="_blank" rel="noopener">Ver canal no YouTube →</a>
+      <a class="ig-link" href="https://www.instagram.com/raphaelbrunon/?hl=en" target="_blank" rel="noopener">Ver mais no Instagram →</a>
     </div>
     <div class="video-row">
       <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -761,27 +811,18 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <p class="eyebrow">Depoimentos</p>
       <h2>Quem já sentiu, recomenda.</h2>
     </div>
-    <div class="t-list">
-      <div class="t-row" data-reveal>
-        <span class="t-mark" aria-hidden="true">“</span>
-        <div>
-          <p class="t-quote">Entrei sem confiança nenhuma e hoje não perco uma aula de Bike. O Raphael tem um jeito único de motivar.</p>
-          <div class="t-person"><strong>Aluna, Bike Indoor</strong><span class="dot"></span><span>Aluna há 8 meses</span></div>
-        </div>
+    <div class="t-grid">
+      <div class="t-card" data-reveal>
+        <p class="t-quote">Entrei sem confiança nenhuma e hoje não perco uma aula de Bike. O Raphael tem um jeito único de motivar.</p>
+        <p class="t-tag">Bike Indoor <span class="dot"></span> há 8 meses</p>
       </div>
-      <div class="t-row" data-reveal>
-        <span class="t-mark" aria-hidden="true">“</span>
-        <div>
-          <p class="t-quote">A coreografia do nosso casamento foi o momento mais comentado da festa. Profissionalismo do início ao fim.</p>
-          <div class="t-person"><strong>Noivos</strong><span class="dot"></span><span>Coreografia de casamento</span></div>
-        </div>
+      <div class="t-card" data-reveal>
+        <p class="t-quote">A coreografia do nosso casamento foi o momento mais comentado da festa. Profissionalismo do início ao fim.</p>
+        <p class="t-tag">Casamento <span class="dot"></span> recente</p>
       </div>
-      <div class="t-row" data-reveal>
-        <span class="t-mark" aria-hidden="true">“</span>
-        <div>
-          <p class="t-quote">O personal me ajudou a entender meu corpo de um jeito que nenhum outro treino tinha conseguido.</p>
-          <div class="t-person"><strong>Aluno, Personal Trainer</strong><span class="dot"></span><span>Aluno há 1 ano</span></div>
-        </div>
+      <div class="t-card" data-reveal>
+        <p class="t-quote">O personal me ajudou a entender meu corpo de um jeito que nenhum outro treino tinha conseguido.</p>
+        <p class="t-tag">Personal Trainer <span class="dot"></span> há 1 ano</p>
       </div>
     </div>
   </div>
@@ -803,7 +844,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <a href="https://www.instagram.com/raphaelbrunon/?hl=en" target="_blank" rel="noopener">Instagram</a>
       <a href="https://www.youtube.com/@BoomCompanyOficial" target="_blank" rel="noopener">YouTube</a>
       <a href="tel:+5500000000000">(00) 00000-0000</a>
-      <a href="mailto:contato@raphaelbruno.com">contato@raphaelbruno.com</a>
+      <a href="mailto:contato@raphaelbrunon.com">contato@raphaelbrunon.com</a>
     </div>
   </div>
 </section>
@@ -1029,6 +1070,92 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     heroObserver.observe(hero);
   } else if(!reduceMotion){
     startLoop();
+  }
+
+  /* ---------------------------------------------------------
+     GALERIA — carrossel "folhear fotos"
+  --------------------------------------------------------- */
+  var carTrack = document.getElementById('carTrack');
+  if(carTrack){
+    var carSlides = Array.prototype.slice.call(carTrack.querySelectorAll('.car-slide'));
+    var carPrev = document.querySelector('.car-prev');
+    var carNext = document.querySelector('.car-next');
+
+    function carSlideStep(){
+      var first = carSlides[0];
+      var cs = getComputedStyle(carTrack);
+      var gap = parseFloat(cs.columnGap || cs.gap) || 20;
+      return first.getBoundingClientRect().width + gap;
+    }
+    function carScrollByDir(dir){
+      carTrack.scrollBy({left: dir * carSlideStep(), behavior: reduceMotion ? 'auto' : 'smooth'});
+    }
+    if(carPrev){ carPrev.addEventListener('click', function(){ carScrollByDir(-1); }); }
+    if(carNext){ carNext.addEventListener('click', function(){ carScrollByDir(1); }); }
+
+    carTrack.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight'){ e.preventDefault(); carScrollByDir(1); }
+      else if(e.key === 'ArrowLeft'){ e.preventDefault(); carScrollByDir(-1); }
+    });
+
+    // arrastar com o mouse (toque e trackpad já rolam nativamente)
+    var carDrag = {down:false, startX:0, startScroll:0};
+    carTrack.addEventListener('pointerdown', function(e){
+      if(e.pointerType !== 'mouse') return;
+      carDrag.down = true;
+      carDrag.startX = e.clientX;
+      carDrag.startScroll = carTrack.scrollLeft;
+      carTrack.style.scrollSnapType = 'none';
+      carTrack.setPointerCapture(e.pointerId);
+    });
+    carTrack.addEventListener('pointermove', function(e){
+      if(!carDrag.down) return;
+      carTrack.scrollLeft = carDrag.startScroll - (e.clientX - carDrag.startX);
+    });
+    function carEndDrag(){
+      if(carDrag.down){
+        carDrag.down = false;
+        carTrack.style.scrollSnapType = 'x mandatory';
+      }
+    }
+    carTrack.addEventListener('pointerup', carEndDrag);
+    carTrack.addEventListener('pointercancel', carEndDrag);
+
+    // profundidade tipo "pilha de fotos" — só sem prefers-reduced-motion
+    if(!reduceMotion){
+      var carTicking = false;
+      function updateCarDepth(){
+        var trackRect = carTrack.getBoundingClientRect();
+        var center = trackRect.left + trackRect.width / 2;
+        carSlides.forEach(function(slide){
+          var r = slide.getBoundingClientRect();
+          var slideCenter = r.left + r.width / 2;
+          var d = r.width ? (slideCenter - center) / r.width : 0;
+          var ad = Math.min(Math.abs(d), 1);
+          var scale = 1 - ad * 0.14;
+          var rotate = d * 5;
+          var translateY = ad * 12;
+          var opacity = 1 - ad * 0.4;
+          slide.style.transform = 'translate3d(0,' + translateY.toFixed(2) + 'px,0) scale(' + scale.toFixed(3) + ') rotate(' + rotate.toFixed(2) + 'deg)';
+          slide.style.opacity = opacity.toFixed(3);
+        });
+        carTicking = false;
+      }
+      carTrack.addEventListener('scroll', function(){
+        if(!carTicking){ carTicking = true; requestAnimationFrame(updateCarDepth); }
+      }, {passive:true});
+      window.addEventListener('resize', function(){ requestAnimationFrame(updateCarDepth); }, {passive:true});
+      if('IntersectionObserver' in window){
+        var carObserver = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting){ requestAnimationFrame(updateCarDepth); }
+          });
+        });
+        carObserver.observe(carTrack);
+      } else {
+        updateCarDepth();
+      }
+    }
   }
 
 })();
