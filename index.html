@@ -208,12 +208,12 @@ h1,h2,h3{
 }
 .hero-bg{object-position:58% 50%;z-index:0;}
 .hero-on{
-  object-position:64% 40%;
+  object-position:60% 42%;
   z-index:1;
-  opacity:.85;
-  --on-x:230px;
-  --on-scale:0.3;
-  transform-origin:92% 50%;
+  opacity:.9;
+  --on-x:280px;
+  --on-scale:0.68;
+  transform-origin:90% 18%;
   transform:translate3d(var(--on-x),0,0) scale(var(--on-scale));
 }
 .hero-raphael{object-position:58% 46%;z-index:2;}
@@ -247,14 +247,31 @@ h1,h2,h3{
   max-width:360px;
 }
 .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;}
-.hero-social{
-  display:flex;align-items:center;gap:10px;
-  font-size:12.5px;
-  color:var(--text-faint);
+.hero-stat{
+  display:flex;align-items:center;gap:18px;
   margin-top:6px;
+  padding-top:20px;
+  border-top:1px solid var(--line-strong);
+  width:fit-content;
 }
-.hero-social-line{width:20px;height:1px;background:var(--accent-soft);flex:0 0 auto;}
-.hero-social strong{font-family:var(--font-display);color:var(--accent-soft);font-weight:700;font-size:13px;}
+.hero-stat-number{
+  font-family:var(--font-display);
+  font-size:clamp(32px,3.6vw,44px);
+  font-weight:800;
+  color:var(--accent-soft);
+  line-height:1;
+  letter-spacing:-.01em;
+  white-space:nowrap;
+}
+.hero-stat-divider{width:1px;height:36px;background:var(--line-strong);flex:0 0 auto;}
+.hero-stat-label{
+  font-size:13px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  line-height:1.4;
+  font-weight:600;
+}
 
 .btn{
   display:inline-flex;align-items:center;gap:10px;
@@ -343,64 +360,90 @@ h1,h2,h3{
   content:"";position:absolute;top:0;right:0;
   width:1px;height:52px;background:var(--accent);
 }
+.about-mark-bl{
+  position:absolute;bottom:-18px;left:-18px;
+  width:52px;height:1px;background:var(--accent);
+}
+.about-mark-bl::after{
+  content:"";position:absolute;bottom:0;left:0;
+  width:1px;height:52px;background:var(--accent);
+}
 
 /* ===========================================================
    MODALIDADES
 =========================================================== */
 .modalidades{background:var(--bg-soft);}
-.modalidades-list{border-top:1px solid var(--line);}
-.modalidade-row{
-  --row-accent:var(--accent-soft);
-  position:relative;
-  display:grid;
-  grid-template-columns:56px 1fr auto;
-  align-items:center;
-  gap:22px;
-  padding:19px 0 19px 14px;
-  border-bottom:1px solid var(--line);
-  transition:padding-left .3s ease, background .3s ease;
+.modalidades-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
 }
-.modalidade-row::before{
+.modalidade-card{
+  --card-accent:var(--accent-soft);
+  position:relative;
+  background:var(--surface);
+  padding:42px 30px;
+  min-height:296px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;
+  transition:background .4s ease;
+}
+.modalidade-card::before{
   content:"";
-  position:absolute;left:0;top:10%;bottom:10%;width:2px;
-  background:var(--row-accent);
-  opacity:.35;
+  position:absolute;top:-30%;right:-20%;
+  width:68%;height:68%;
+  border-radius:50%;
+  background:var(--card-accent);
+  filter:blur(70px);
+  opacity:0;
+  transition:opacity .4s ease;
+  pointer-events:none;
+}
+.modalidade-card::after{
+  content:"";
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--card-accent);
+  opacity:.45;
   transition:opacity .3s ease;
 }
-.modalidade-row:hover{padding-left:20px;}
-.modalidade-row:hover::before{opacity:1;}
+.modalidade-card:hover::before{opacity:.2;}
+.modalidade-card:hover::after{opacity:1;}
+.modalidade-card:hover{background:#1a171d;}
 .modalidade-num{
+  position:relative;z-index:1;
   font-family:var(--font-display);
-  font-size:17px;
-  color:var(--row-accent);
-  font-weight:600;
+  font-size:13px;
+  color:var(--card-accent);
+  letter-spacing:.08em;
+  font-weight:700;
+  margin-bottom:20px;
 }
 .modalidade-kicker{
+  position:relative;z-index:1;
   display:block;
   font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);
-  margin-bottom:3px;
+  margin-bottom:8px;
 }
-.modalidade-body h3{
-  font-size:clamp(19px,2.2vw,26px);
+.modalidade-card h3{
+  position:relative;z-index:1;
+  font-size:clamp(20px,2.1vw,26px);
   text-transform:uppercase;
-  margin-bottom:4px;
+  margin-bottom:12px;
   transition:color .25s ease;
 }
-.modalidade-row:hover .modalidade-body h3{color:var(--row-accent);}
-.modalidade-body p{color:var(--text-muted);font-size:13.5px;line-height:1.6;max-width:440px;}
+.modalidade-card:hover h3{color:var(--card-accent);}
+.modalidade-card p{position:relative;z-index:1;color:var(--text-muted);font-size:13.5px;line-height:1.7;max-width:280px;margin-bottom:24px;}
 .modalidade-link{
+  position:relative;z-index:1;
   font-size:12px;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--row-accent);
-  border-bottom:1px solid currentColor;
+  color:var(--text);
+  border-bottom:1px solid rgba(255,255,255,.25);
   padding-bottom:4px;
-  white-space:nowrap;
-  transition:opacity .3s ease, transform .3s ease;
-  display:inline-block;
-  opacity:0;
-  transform:translateX(-8px);
+  display:inline-flex;align-items:center;gap:8px;
+  width:fit-content;
+  transition:color .3s ease, border-color .3s ease;
 }
-.modalidade-row:hover .modalidade-link,
-.modalidade-row:focus-within .modalidade-link{opacity:1;transform:translateX(0);}
+.modalidade-card:hover .modalidade-link{color:var(--card-accent);border-color:var(--card-accent);}
 
 /* ===========================================================
    GALERIA
@@ -495,22 +538,51 @@ h1,h2,h3{
 =========================================================== */
 .testimonials{background:var(--bg);}
 .t-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
 }
 .t-card{
-  background:var(--bg);
-  padding:32px 28px;
-  display:flex;flex-direction:column;gap:16px;
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:3px;
+  padding:38px 28px 28px;
+  display:flex;flex-direction:column;gap:22px;
+  transition:transform .35s ease, border-color .35s ease, background .35s ease;
+}
+.t-card:hover{transform:translateY(-5px);border-color:var(--line-strong);background:#17151a;}
+.t-mark{
+  position:absolute;top:18px;right:22px;
+  font-family:var(--font-display);
+  font-size:60px;
+  line-height:1;
+  color:var(--accent-dim);
+  pointer-events:none;
+  user-select:none;
 }
 .t-quote{
+  position:relative;z-index:1;
   font-size:15.5px;
-  line-height:1.6;
+  line-height:1.65;
   color:var(--text);
   font-weight:500;
+  max-width:94%;
 }
-.t-tag{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-faint);letter-spacing:.02em;margin-top:auto;}
+.t-tag{
+  display:flex;align-items:baseline;gap:10px;
+  margin-top:auto;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+}
+.t-tag-modality{
+  font-family:var(--font-display);
+  font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--accent-soft);font-weight:700;
+}
+.t-tag-time{font-size:12px;color:var(--text-faint);}
 .t-tag .dot{width:3px;height:3px;border-radius:50%;background:var(--text-faint);flex:0 0 auto;}
+@media (min-width:981px){
+  .t-card:nth-child(2){margin-top:-16px;}
+}
 
 /* ===========================================================
    CONTATO
@@ -573,25 +645,59 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   .nav-cta{display:none;}
   .nav-toggle{display:block;}
   .nav-logo img{height:36px;}
-  .hero-bg{object-position:66% 50%;}
-  .hero-on{object-position:82% 36%;--on-x:70px;--on-scale:0.42;}
-  .hero-raphael{object-position:70% 40%;}
-  .hero-scrim{
-    background:linear-gradient(180deg, rgba(9,9,11,.82) 0%, rgba(9,9,11,.38) 30%, rgba(9,9,11,.12) 52%, rgba(9,9,11,.5) 82%, rgba(9,9,11,.78) 100%);
+
+  /* hero: layout empilhado — imagem (Raphael + ON) centralizada no topo,
+     conteúdo (lettering, botões, +400k) em fluxo normal abaixo */
+  .hero{
+    height:auto;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    padding-top:var(--nav-h);
   }
-  .hero-content{max-width:100%;justify-content:flex-start;padding-top:calc(var(--nav-h) + 30px);gap:16px;}
+  .hero-stage{
+    position:relative;
+    inset:auto;
+    width:100%;
+    height:56vh;
+    min-height:380px;
+    max-height:620px;
+    flex:0 0 auto;
+  }
+  .hero-bg{object-position:46% 30%;}
+  .hero-on{object-position:58% 48%;--on-x:20px;--on-scale:1.1;transform-origin:82% 28%;}
+  .hero-raphael{object-position:46% 30%;}
+  .hero-scrim{
+    background:linear-gradient(180deg, rgba(9,9,11,0) 62%, var(--bg) 100%);
+  }
+  .hero-content{
+    position:relative;z-index:4;
+    height:auto;
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
+    max-width:100%;
+    padding:8px var(--gutter) 48px;
+    gap:16px;
+    transform:none !important;
+    opacity:1 !important;
+  }
+  .hero-lede{max-width:320px;}
+  .hero-actions{justify-content:center;}
+  .hero-stat{margin:6px auto 0;}
+  .hero-scrollcue{display:none;}
   .about-grid{grid-template-columns:1fr;gap:44px;}
   .about-visual{order:-1;max-width:420px;}
-  .modalidade-row{grid-template-columns:44px 1fr;}
-  .modalidade-link{grid-column:1/-1;justify-self:start;margin-top:2px;opacity:1;transform:none;}
+  .modalidades-grid{grid-template-columns:1fr 1fr;}
   .video-row{grid-template-columns:1fr 1fr;}
   .t-grid{grid-template-columns:1fr;}
 }
 @media (max-width:640px){
   :root{--nav-h:72px;}
   .hero-title{font-size:clamp(44px,13vw,64px);}
-  .hero-actions{flex-direction:column;align-items:flex-start;}
+  .hero-actions{flex-direction:column;align-items:center;width:100%;}
+  .hero-actions .btn{width:100%;justify-content:center;max-width:320px;}
   .video-row{grid-template-columns:1fr;}
+  .modalidades-grid{grid-template-columns:1fr;}
   footer{flex-direction:column;align-items:flex-start;}
 }
 </style>
@@ -650,10 +756,11 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <a class="btn btn-primary" href="#servicos">Conheça as aulas</a>
       <a class="btn btn-ghost" href="#sobre">Sobre mim</a>
     </div>
-    <p class="hero-social" data-reveal>
-      <span class="hero-social-line" aria-hidden="true"></span>
-      <strong>+400k</strong>&nbsp;seguidores nas redes
-    </p>
+    <div class="hero-stat" data-reveal>
+      <span class="hero-stat-number">+400K</span>
+      <span class="hero-stat-divider" aria-hidden="true"></span>
+      <span class="hero-stat-label">Seguidores<br>nas redes</span>
+    </div>
   </div>
 
   <div class="hero-scrollcue" aria-hidden="true"><span></span></div>
@@ -687,6 +794,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
         <span>Foto em aula — em breve</span>
       </div>
       <div class="about-mark" aria-hidden="true"></div>
+      <div class="about-mark-bl" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -700,62 +808,50 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <p class="eyebrow">Modalidades</p>
       <h2>Encontre o seu ritmo.</h2>
     </div>
-    <ul class="modalidades-list">
-      <li class="modalidade-row" data-reveal style="--row-accent:#4f9cf6;">
+    <div class="modalidades-grid">
+      <div class="modalidade-card" data-reveal style="--card-accent:#4f9cf6;">
         <span class="modalidade-num">01</span>
-        <div class="modalidade-body">
-          <span class="modalidade-kicker">Ciclismo Indoor</span>
-          <h3>Bike Indoor</h3>
-          <p>Aulas em ritmo, com música e cadência que levam sua resistência a outro nível.</p>
-        </div>
+        <span class="modalidade-kicker">Ciclismo Indoor</span>
+        <h3>Bike Indoor</h3>
+        <p>Aulas em ritmo, com música e cadência que levam sua resistência a outro nível.</p>
         <a class="modalidade-link" href="#contato">Saiba mais →</a>
-      </li>
-      <li class="modalidade-row" data-reveal style="--row-accent:#a179f2;">
+      </div>
+      <div class="modalidade-card" data-reveal style="--card-accent:#a179f2;">
         <span class="modalidade-num">02</span>
-        <div class="modalidade-body">
-          <span class="modalidade-kicker">Dança &amp; Ritmo</span>
-          <h3>Boom Dance</h3>
-          <p>Coreografias envolventes que unem diversão, técnica e queima calórica.</p>
-        </div>
+        <span class="modalidade-kicker">Dança &amp; Ritmo</span>
+        <h3>Boom Dance</h3>
+        <p>Coreografias envolventes que unem diversão, técnica e queima calórica.</p>
         <a class="modalidade-link" href="#contato">Saiba mais →</a>
-      </li>
-      <li class="modalidade-row" data-reveal style="--row-accent:#3fd18a;">
+      </div>
+      <div class="modalidade-card" data-reveal style="--card-accent:#3fd18a;">
         <span class="modalidade-num">03</span>
-        <div class="modalidade-body">
-          <span class="modalidade-kicker">Alta Performance</span>
-          <h3>Boom Jump</h3>
-          <p>Treino cardiovascular intenso em mini trampolins, leve para as articulações.</p>
-        </div>
+        <span class="modalidade-kicker">Alta Performance</span>
+        <h3>Boom Jump</h3>
+        <p>Treino cardiovascular intenso em mini trampolins, leve para as articulações.</p>
         <a class="modalidade-link" href="#contato">Saiba mais →</a>
-      </li>
-      <li class="modalidade-row" data-reveal style="--row-accent:#f2705f;">
+      </div>
+      <div class="modalidade-card" data-reveal style="--card-accent:#f2705f;">
         <span class="modalidade-num">04</span>
-        <div class="modalidade-body">
-          <span class="modalidade-kicker">Musculação</span>
-          <h3>Personal Trainer</h3>
-          <p>Treinos individuais, com plano sob medida para seus objetivos e evolução.</p>
-        </div>
+        <span class="modalidade-kicker">Musculação</span>
+        <h3>Personal Trainer</h3>
+        <p>Treinos individuais, com plano sob medida para seus objetivos e evolução.</p>
         <a class="modalidade-link" href="#contato">Saiba mais →</a>
-      </li>
-      <li class="modalidade-row" data-reveal style="--row-accent:#dab35c;">
+      </div>
+      <div class="modalidade-card" data-reveal style="--card-accent:#dab35c;">
         <span class="modalidade-num">05</span>
-        <div class="modalidade-body">
-          <span class="modalidade-kicker">Casamentos</span>
-          <h3>Coreografias para Casamentos</h3>
-          <p>A primeira dança dos noivos, ensaiada com carinho para o dia mais especial.</p>
-        </div>
+        <span class="modalidade-kicker">Casamentos</span>
+        <h3>Coreografias para Casamentos</h3>
+        <p>A primeira dança dos noivos, ensaiada com carinho para o dia mais especial.</p>
         <a class="modalidade-link" href="#contato">Saiba mais →</a>
-      </li>
-      <li class="modalidade-row" data-reveal style="--row-accent:#57d6cf;">
+      </div>
+      <div class="modalidade-card" data-reveal style="--card-accent:#57d6cf;">
         <span class="modalidade-num">06</span>
-        <div class="modalidade-body">
-          <span class="modalidade-kicker">Debutantes</span>
-          <h3>Coreografias para Debutantes</h3>
-          <p>Valsas e coreografias de 15 anos, criadas para brilhar no salão.</p>
-        </div>
+        <span class="modalidade-kicker">Debutantes</span>
+        <h3>Coreografias para Debutantes</h3>
+        <p>Valsas e coreografias de 15 anos, criadas para brilhar no salão.</p>
         <a class="modalidade-link" href="#contato">Saiba mais →</a>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -813,16 +909,19 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     </div>
     <div class="t-grid">
       <div class="t-card" data-reveal>
+        <span class="t-mark" aria-hidden="true">&ldquo;</span>
         <p class="t-quote">Entrei sem confiança nenhuma e hoje não perco uma aula de Bike. O Raphael tem um jeito único de motivar.</p>
-        <p class="t-tag">Bike Indoor <span class="dot"></span> há 8 meses</p>
+        <p class="t-tag"><span class="t-tag-modality">Bike Indoor</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">há 8 meses</span></p>
       </div>
       <div class="t-card" data-reveal>
+        <span class="t-mark" aria-hidden="true">&ldquo;</span>
         <p class="t-quote">A coreografia do nosso casamento foi o momento mais comentado da festa. Profissionalismo do início ao fim.</p>
-        <p class="t-tag">Casamento <span class="dot"></span> recente</p>
+        <p class="t-tag"><span class="t-tag-modality">Casamento</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">recente</span></p>
       </div>
       <div class="t-card" data-reveal>
+        <span class="t-mark" aria-hidden="true">&ldquo;</span>
         <p class="t-quote">O personal me ajudou a entender meu corpo de um jeito que nenhum outro treino tinha conseguido.</p>
-        <p class="t-tag">Personal Trainer <span class="dot"></span> há 1 ano</p>
+        <p class="t-tag"><span class="t-tag-modality">Personal Trainer</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">há 1 ano</span></p>
       </div>
     </div>
   </div>
@@ -963,6 +1062,12 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   }
   readOnBase();
 
+  // abaixo de 980px a hero vira um layout empilhado (imagem contida + conteúdo
+  // em fluxo normal), então o parallax/scroll-exit calibrado para a hero em
+  // tela cheia é desligado — a flutuação sutil em CSS (floatY) cuida do resto.
+  var isStackedHero = window.matchMedia('(max-width:980px)').matches;
+  function onStackedChange(){ isStackedHero = window.matchMedia('(max-width:980px)').matches; }
+
   function onPointerMove(e){
     if(!isFinePointer || reduceMotion) return;
     var rect = hero.getBoundingClientRect();
@@ -985,7 +1090,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   }
 
   function render(){
-    if(!reduceMotion){
+    if(!reduceMotion && !isStackedHero){
       // suaviza o parallax do mouse (lerp)
       state.curMX += (state.targetMX - state.curMX) * 0.08;
       state.curMY += (state.targetMY - state.curMY) * 0.08;
@@ -1015,6 +1120,13 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       var textOpacity = Math.max(0, 1 - p * 1.6);
       heroContent.style.transform = 'translate3d(0,' + textY.toFixed(2) + 'px,0)';
       heroContent.style.opacity = textOpacity.toFixed(3);
+    } else if(isStackedHero){
+      // garante que nada fique com transform/opacity residual ao trocar de breakpoint
+      heroBg.style.transform = '';
+      heroOn.style.transform = '';
+      heroRaphael.style.transform = '';
+      heroContent.style.transform = '';
+      heroContent.style.opacity = '';
     }
 
     if(state.active){
@@ -1048,6 +1160,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   function onResize(){
     state.heroHeight = hero.offsetHeight;
     readOnBase();
+    onStackedChange();
   }
 
   window.addEventListener('scroll', onScroll, {passive:true});
