@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Raphael BrunON | Mais que dança, uma energia real.</title>
 <meta name="description" content="Raphael BrunON — professor, coreógrafo e criador. Bike Indoor, Boom Dance, Boom Jump, Personal Trainer e coreografias para casamentos e debutantes.">
-<link rel="icon" href="assets/hero/on-hero.png">
+<link rel="icon" href="assets/hero/logo-raphael-brunon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -636,6 +636,31 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     }
   }
 }
+/* quando o JS consegue ler o sensor de movimento do aparelho, a flutuação
+   automática acima cede lugar ao parallax por inclinação (evita conflito
+   entre a animação CSS e o transform escrito via JS a cada frame) */
+.tilt-active .hero-raphael,
+.tilt-active .hero-on{animation:none;}
+
+/* botão discreto para pedir permissão de sensores de movimento (iOS) —
+   só existe visualmente em mobile/tablet, e só quando o JS o revela */
+.hero-tilt-btn{display:none;}
+@media (max-width:980px){
+  .hero-tilt-btn{
+    display:inline-flex;align-items:center;
+    margin-top:2px;
+    padding:9px 18px;
+    font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+    color:var(--text-faint);
+    border:1px solid var(--line-strong);
+    border-radius:999px;
+    background:transparent;
+    transition:border-color .25s ease, color .25s ease;
+  }
+  .hero-tilt-btn:hover,
+  .hero-tilt-btn:focus-visible{border-color:var(--accent-soft);color:var(--text);}
+  .hero-tilt-btn[hidden]{display:none;}
+}
 
 /* ===========================================================
    RESPONSIVIDADE
@@ -710,7 +735,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
 <nav class="nav" id="mainNav">
   <div class="nav-left">
     <a class="nav-logo" href="#topo" aria-label="Raphael BrunON — início">
-      <img src="assets/hero/on-hero.png" alt="Raphael BrunON">
+      <img src="assets/hero/logo-raphael-brunon.png" alt="Raphael BrunON">
     </a>
     <div class="nav-links">
       <a href="#sobre">Sobre</a>
@@ -761,6 +786,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <span class="hero-stat-divider" aria-hidden="true"></span>
       <span class="hero-stat-label">Seguidores<br>nas redes</span>
     </div>
+    <button type="button" class="hero-tilt-btn" id="heroTiltBtn" hidden>Ativar animação</button>
   </div>
 
   <div class="hero-scrollcue" aria-hidden="true"><span></span></div>
@@ -953,7 +979,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
 ============================================================== -->
 <footer>
   <a class="foot-brand" href="#topo" aria-label="Raphael BrunON — início">
-    <img src="assets/hero/on-hero.png" alt="">
+    <img src="assets/hero/logo-raphael-brunon.png" alt="">
     <span>Raphael BrunON</span>
   </a>
   <div class="foot-links">
@@ -1041,17 +1067,32 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   var heroOn = document.getElementById('heroOn');
   var heroRaphael = document.getElementById('heroRaphael');
   var heroContent = document.getElementById('heroContent');
+  var heroTiltBtn = document.getElementById('heroTiltBtn');
+
+  function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 
   var state = {
-    targetMX: 0, targetMY: 0,   // alvo do parallax de mouse (-1 a 1)
-    curMX: 0, curMY: 0,         // valor suavizado atual
-    scrollProgress: 0,          // 0 a 1 ao longo da altura da hero
+    targetMX: 0, targetMY: 0,   // alvo do parallax de mouse (-1 a 1) — desktop
+    curMX: 0, curMY: 0,         // valor suavizado atual — desktop
+    scrollProgress: 0,          // 0 a 1 ao longo da altura da hero — desktop
     heroHeight: hero.offsetHeight,
     onBaseX: 0, onBaseScale: 1, // posição/escala de repouso do ON (lidas do CSS, variam por breakpoint)
     ticking: false,
     rafId: null,
     active: false
   };
+
+  // ---- inclinação do aparelho (mobile/tablet) -----------------------------
+  var tilt = {
+    supported: false,
+    active: false,             // já está recebendo leituras reais do sensor
+    baselineBeta: null, baselineGamma: null,
+    targetTX: 0, targetTY: 0,  // alvo normalizado (-1 a 1)
+    curTX: 0, curTY: 0,        // valor suavizado atual
+    fallbackTimer: null,
+    listening: false
+  };
+  var TILT_RANGE_DEG = 16; // graus de inclinação (a partir do repouso) para atingir -1/1
 
   function readOnBase(){
     var cs = getComputedStyle(heroOn);
@@ -1063,13 +1104,12 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   readOnBase();
 
   // abaixo de 980px a hero vira um layout empilhado (imagem contida + conteúdo
-  // em fluxo normal), então o parallax/scroll-exit calibrado para a hero em
-  // tela cheia é desligado — a flutuação sutil em CSS (floatY) cuida do resto.
+  // em fluxo normal): desktop usa mouse + scroll, mobile/tablet usa a
+  // inclinação física do aparelho como gatilho do parallax.
   var isStackedHero = window.matchMedia('(max-width:980px)').matches;
-  function onStackedChange(){ isStackedHero = window.matchMedia('(max-width:980px)').matches; }
 
   function onPointerMove(e){
-    if(!isFinePointer || reduceMotion) return;
+    if(!isFinePointer || reduceMotion || isStackedHero) return;
     var rect = hero.getBoundingClientRect();
     var x = (e.clientX - rect.left) / rect.width;   // 0..1
     var y = (e.clientY - rect.top) / rect.height;   // 0..1
@@ -1079,6 +1119,104 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   function onPointerLeave(){
     state.targetMX = 0;
     state.targetMY = 0;
+  }
+  function attachPointer(){
+    if(isFinePointer && !reduceMotion){
+      hero.addEventListener('pointermove', onPointerMove, {passive:true});
+      hero.addEventListener('pointerleave', onPointerLeave, {passive:true});
+    }
+  }
+  function detachPointer(){
+    hero.removeEventListener('pointermove', onPointerMove);
+    hero.removeEventListener('pointerleave', onPointerLeave);
+    state.targetMX = 0; state.targetMY = 0; state.curMX = 0; state.curMY = 0;
+  }
+
+  // ---- inclinação do aparelho: leitura, suavização e permissão (iOS) -----
+  function handleOrientation(e){
+    if(e.beta === null || e.gamma === null || e.beta === undefined || e.gamma === undefined) return;
+    if(tilt.baselineBeta === null){
+      // calibra a partir da primeira leitura: o "repouso" é como a pessoa
+      // já está segurando o aparelho, não necessariamente na horizontal
+      tilt.baselineBeta = e.beta;
+      tilt.baselineGamma = e.gamma;
+    }
+    var dGamma = e.gamma - tilt.baselineGamma; // inclinar para os lados
+    var dBeta = e.beta - tilt.baselineBeta;    // inclinar para frente/trás
+    tilt.targetTX = clamp(dGamma / TILT_RANGE_DEG, -1, 1);
+    tilt.targetTY = clamp(dBeta / TILT_RANGE_DEG, -1, 1);
+    if(!tilt.active){
+      tilt.active = true;
+      hero.classList.add('tilt-active');
+      if(tilt.fallbackTimer){ clearTimeout(tilt.fallbackTimer); tilt.fallbackTimer = null; }
+    }
+  }
+
+  function attachTilt(){
+    if(tilt.listening || reduceMotion || !isStackedHero) return;
+    tilt.listening = true;
+    window.addEventListener('deviceorientation', handleOrientation, {passive:true});
+    // alguns navegadores "têm" o evento mas nunca disparam dados reais
+    // (sem giroscópio, permissão bloqueada nas configs etc.) — nesse caso,
+    // desiste silenciosamente e deixa a flutuação em CSS como visual.
+    tilt.fallbackTimer = setTimeout(function(){
+      if(!tilt.active){ detachTilt(); }
+    }, 1500);
+  }
+  function detachTilt(){
+    window.removeEventListener('deviceorientation', handleOrientation);
+    tilt.listening = false;
+    tilt.active = false;
+    tilt.baselineBeta = null; tilt.baselineGamma = null;
+    tilt.targetTX = 0; tilt.targetTY = 0; tilt.curTX = 0; tilt.curTY = 0;
+    if(tilt.fallbackTimer){ clearTimeout(tilt.fallbackTimer); tilt.fallbackTimer = null; }
+    hero.classList.remove('tilt-active');
+  }
+
+  function needsIOSTiltPermission(){
+    return typeof DeviceOrientationEvent !== 'undefined' &&
+           typeof DeviceOrientationEvent.requestPermission === 'function';
+  }
+
+  function requestIOSTiltPermission(){
+    DeviceOrientationEvent.requestPermission().then(function(result){
+      if(heroTiltBtn){ heroTiltBtn.hidden = true; }
+      if(result === 'granted'){ attachTilt(); }
+      // se negado, segue com a flutuação em CSS — sem incomodar de novo
+    }).catch(function(){
+      if(heroTiltBtn){ heroTiltBtn.hidden = true; }
+    });
+  }
+
+  function setupTilt(){
+    if(reduceMotion || !isStackedHero) return;
+    if(!('DeviceOrientationEvent' in window)) return; // sem suporte: fica a flutuação em CSS
+    tilt.supported = true;
+    if(needsIOSTiltPermission()){
+      if(heroTiltBtn){
+        heroTiltBtn.hidden = false;
+        heroTiltBtn.addEventListener('click', requestIOSTiltPermission);
+      }
+    } else {
+      attachTilt();
+    }
+  }
+  function teardownTilt(){
+    detachTilt();
+    if(heroTiltBtn){ heroTiltBtn.hidden = true; }
+  }
+
+  function onStackedChange(){
+    var was = isStackedHero;
+    isStackedHero = window.matchMedia('(max-width:980px)').matches;
+    if(isStackedHero === was) return;
+    if(isStackedHero){
+      detachPointer();
+      setupTilt();
+    } else {
+      teardownTilt();
+      attachPointer();
+    }
   }
 
   function computeScrollProgress(){
@@ -1090,8 +1228,13 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   }
 
   function render(){
-    if(!reduceMotion && !isStackedHero){
-      // suaviza o parallax do mouse (lerp)
+    if(reduceMotion){
+      if(state.active){ state.rafId = requestAnimationFrame(render); } else { state.rafId = null; }
+      return;
+    }
+
+    if(!isStackedHero){
+      // ---- DESKTOP: parallax de mouse + saída no scroll (inalterado) ----
       state.curMX += (state.targetMX - state.curMX) * 0.08;
       state.curMY += (state.targetMY - state.curMY) * 0.08;
 
@@ -1120,8 +1263,29 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       var textOpacity = Math.max(0, 1 - p * 1.6);
       heroContent.style.transform = 'translate3d(0,' + textY.toFixed(2) + 'px,0)';
       heroContent.style.opacity = textOpacity.toFixed(3);
-    } else if(isStackedHero){
-      // garante que nada fique com transform/opacity residual ao trocar de breakpoint
+    } else if(tilt.active){
+      // ---- MOBILE/TABLET: parallax por inclinação do aparelho ----
+      tilt.curTX += (tilt.targetTX - tilt.curTX) * 0.08;
+      tilt.curTY += (tilt.targetTY - tilt.curTY) * 0.08;
+      var tx = tilt.curTX, ty = tilt.curTY;
+
+      // background: movimento muito leve
+      var tBgX = tx * 2, tBgY = ty * 2;
+      heroBg.style.transform = 'translate3d(' + tBgX.toFixed(2) + 'px,' + tBgY.toFixed(2) + 'px,0)';
+
+      // ON: um pouco mais que o background, preservando a posição/escala de repouso
+      var tOnX = state.onBaseX + tx * 6 + ty * 2;
+      var tOnY = ty * 6;
+      heroOn.style.transform = 'translate3d(' + tOnX.toFixed(2) + 'px,' + tOnY.toFixed(2) + 'px,0) scale(' + state.onBaseScale.toFixed(3) + ')';
+
+      // Raphael: o que mais se move, ainda assim sutil
+      var tRX = tx * 12, tRY = ty * 9;
+      heroRaphael.style.transform = 'translate3d(' + tRX.toFixed(2) + 'px,' + tRY.toFixed(2) + 'px,0)';
+
+      // texto: fica parado (garantido também via CSS !important no breakpoint empilhado)
+    } else {
+      // sem tilt ativo (sem suporte/permissão negada/ainda não concedida):
+      // garante que não fique transform residual — a flutuação em CSS assume
       heroBg.style.transform = '';
       heroOn.style.transform = '';
       heroRaphael.style.transform = '';
@@ -1168,9 +1332,10 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   updateNavState();
   computeScrollProgress();
 
-  if(isFinePointer && !reduceMotion){
-    hero.addEventListener('pointermove', onPointerMove, {passive:true});
-    hero.addEventListener('pointerleave', onPointerLeave, {passive:true});
+  if(isStackedHero){
+    setupTilt();
+  } else {
+    attachPointer();
   }
 
   // só roda o loop de animação enquanto a hero está visível (performance)
