@@ -205,7 +205,14 @@ h1,h2,h3{
   will-change:transform;
 }
 .hero-bg{object-position:58% 50%;z-index:0;}
-.hero-on{object-position:58% 46%;z-index:1;}
+.hero-on{
+  object-position:58% 46%;
+  z-index:1;
+  --on-x:70px;
+  --on-scale:0.78;
+  transform-origin:72% 50%;
+  transform:translate3d(var(--on-x),0,0) scale(var(--on-scale));
+}
 .hero-raphael{object-position:58% 46%;z-index:2;}
 
 .hero-scrim{
@@ -504,8 +511,8 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     .hero-raphael{animation:floatY 7s ease-in-out infinite;}
     .hero-on{animation:floatY 8.5s ease-in-out infinite reverse;}
     @keyframes floatY{
-      0%,100%{transform:translate3d(0,0,0);}
-      50%{transform:translate3d(0,-6px,0);}
+      0%,100%{transform:translate3d(var(--on-x,0),0,0) scale(var(--on-scale,1));}
+      50%{transform:translate3d(var(--on-x,0),-6px,0) scale(var(--on-scale,1));}
     }
   }
 }
@@ -517,7 +524,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   .nav-menu{display:none;}
   .nav-toggle{display:block;}
   .hero-bg{object-position:66% 50%;}
-  .hero-on{object-position:70% 40%;}
+  .hero-on{object-position:70% 40%;--on-x:34px;--on-scale:0.7;}
   .hero-raphael{object-position:70% 40%;}
   .hero-scrim{
     background:linear-gradient(180deg, rgba(9,9,11,.82) 0%, rgba(9,9,11,.38) 30%, rgba(9,9,11,.12) 52%, rgba(9,9,11,.5) 82%, rgba(9,9,11,.78) 100%);
@@ -896,10 +903,20 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     curMX: 0, curMY: 0,         // valor suavizado atual
     scrollProgress: 0,          // 0 a 1 ao longo da altura da hero
     heroHeight: hero.offsetHeight,
+    onBaseX: 0, onBaseScale: 1, // posição/escala de repouso do ON (lidas do CSS, variam por breakpoint)
     ticking: false,
     rafId: null,
     active: false
   };
+
+  function readOnBase(){
+    var cs = getComputedStyle(heroOn);
+    var x = parseFloat(cs.getPropertyValue('--on-x'));
+    var s = parseFloat(cs.getPropertyValue('--on-scale'));
+    state.onBaseX = isNaN(x) ? 0 : x;
+    state.onBaseScale = isNaN(s) ? 1 : s;
+  }
+  readOnBase();
 
   function onPointerMove(e){
     if(!isFinePointer || reduceMotion) return;
@@ -935,10 +952,10 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       var bgX = mx * 3, bgY = my * 3;
       heroBg.style.transform = 'translate3d(' + bgX.toFixed(2) + 'px,' + bgY.toFixed(2) + 'px,0)';
 
-      // ON: parallax leve + recua e reduz um pouco no scroll
-      var onX = mx * 8 + p * -20;
+      // ON: parte da posição/escala de repouso (menor, mais à direita) + parallax leve + recua um pouco no scroll
+      var onX = state.onBaseX + mx * 8 + p * -20;
       var onY = my * 8;
-      var onScale = 1 - p * 0.04;
+      var onScale = state.onBaseScale - p * 0.03;
       heroOn.style.transform = 'translate3d(' + onX.toFixed(2) + 'px,' + onY.toFixed(2) + 'px,0) scale(' + onScale.toFixed(3) + ')';
 
       // Raphael: parallax mais forte + avança, desce e sai de cena no scroll
@@ -985,6 +1002,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   }
   function onResize(){
     state.heroHeight = hero.offsetHeight;
+    readOnBase();
   }
 
   window.addEventListener('scroll', onScroll, {passive:true});
