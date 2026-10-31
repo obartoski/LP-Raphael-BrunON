@@ -551,9 +551,16 @@ h1,h2,h3{
    DEPOIMENTOS
 =========================================================== */
 .testimonials{background:var(--bg);}
-.t-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
-}
+/* Deslizamento contínuo, sem timers ou leituras de layout a cada frame */
+.t-marquee{overflow:hidden;position:relative;touch-action:pan-y;cursor:grab;}
+.t-marquee:active{cursor:grabbing;}
+.t-marquee-track{display:flex;width:max-content;animation:depoimentos-fluir 42s linear infinite;will-change:transform;}
+.t-marquee-group{display:flex;flex:0 0 auto;gap:24px;padding-right:24px;align-items:stretch;}
+.t-marquee-group .t-card{flex:0 0 clamp(280px,29vw,370px);width:clamp(280px,29vw,370px);}
+.t-marquee:hover .t-marquee-track,.t-marquee:focus-within .t-marquee-track,.t-marquee.is-paused .t-marquee-track{animation-play-state:paused;}
+@keyframes depoimentos-fluir{to{transform:translateX(-33.333333%);}}
+@media(max-width:640px){.t-marquee-group .t-card{flex-basis:82vw;width:82vw;}}
+@media(prefers-reduced-motion:reduce){.t-marquee{overflow-x:auto;scrollbar-width:thin;}.t-marquee-track{animation:none;will-change:auto;}}
 .t-card{
   position:relative;
   background:var(--surface);
@@ -563,7 +570,7 @@ h1,h2,h3{
   display:flex;flex-direction:column;gap:22px;
   transition:transform .35s ease, border-color .35s ease, background .35s ease;
 }
-.t-card:hover{transform:translateY(-5px);border-color:var(--line-strong);background:#17151a;}
+.t-card:hover{border-color:var(--line-strong);background:#17151a;}
 .t-mark{
   position:absolute;top:18px;right:22px;
   font-family:var(--font-display);
@@ -594,9 +601,7 @@ h1,h2,h3{
 }
 .t-tag-time{font-size:12px;color:var(--text-faint);}
 .t-tag .dot{width:3px;height:3px;border-radius:50%;background:var(--text-faint);flex:0 0 auto;}
-@media (min-width:981px){
-  .t-card:nth-child(2){margin-top:-16px;}
-}
+
 
 /* ===========================================================
    CONTATO
@@ -728,7 +733,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   .about-visual{order:-1;max-width:420px;}
   .modalidades-grid{grid-template-columns:1fr 1fr;}
   .video-row{grid-template-columns:1fr 1fr;}
-  .t-grid{grid-template-columns:1fr;}
+
 }
 @media (max-width:640px){
   :root{--nav-h:72px;}
@@ -824,8 +829,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
         <span class="chip">Boom Dance</span>
         <span class="chip">Boom Jump</span>
         <span class="chip">Personal Trainer</span>
-        <span class="chip">Coreografias para Casamentos</span>
-        <span class="chip">Coreografias para Debutantes</span>
+        <span class="chip">Coreografias para Casamentos e Debutantes</span>
       </div>
     </div>
     <div class="about-visual" data-reveal>
@@ -878,16 +882,16 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       </div>
       <div class="modalidade-card" data-reveal style="--card-accent:#dab35c;">
         <span class="modalidade-num">05</span>
-        <span class="modalidade-kicker">Casamentos</span>
-        <h3>Coreografias para Casamentos</h3>
-        <p>A primeira dança dos noivos, ensaiada com carinho para o dia mais especial.</p>
+        <span class="modalidade-kicker">Momentos Especiais</span>
+        <h3>Coreografias para Casamentos e Debutantes</h3>
+        <p>Coreografias personalizadas para casamentos e festas de 15 anos, transformando momentos únicos em memórias inesquecíveis.</p>
         <a class="modalidade-link" href="#contato">Saiba mais →</a>
       </div>
       <div class="modalidade-card" data-reveal style="--card-accent:#57d6cf;">
         <span class="modalidade-num">06</span>
-        <span class="modalidade-kicker">Debutantes</span>
-        <h3>Coreografias para Debutantes</h3>
-        <p>Valsas e coreografias de 15 anos, criadas para brilhar no salão.</p>
+        <span class="modalidade-kicker">Entretenimento</span>
+        <h3>Animação de Eventos</h3>
+        <p>Energia, interação e muita dança para envolver o público e transformar cada evento em uma experiência inesquecível.</p>
         <a class="modalidade-link" href="#contato">Saiba mais →</a>
       </div>
     </div>
@@ -908,7 +912,8 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SBT.webp" alt="Raphael BrunON — momento 2 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-ROCK.webp" alt="Raphael BrunON — momento 3 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-FILA.webp" alt="Raphael BrunON — momento 4 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-FEST.webp" alt="Raphael BrunON — momento 5 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+
+        <div class="car-slide"><img src="assets/sobre/galeria/foto_fusao.webp" alt="Raphael BrunON no evento Fusão Music Training" loading="lazy" decoding="async" width="900" height="1125"></div>        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-FEST.webp" alt="Raphael BrunON — momento 5 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-MINI.webp" alt="Raphael BrunON — momento 6 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-RISONHO.webp" alt="Raphael BrunON — momento 7 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-KIDS.webp" alt="Raphael BrunON — momento 8 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
@@ -916,7 +921,8 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-BRASIL.webp" alt="Raphael BrunON — momento 10 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-DANCE-MATO.webp" alt="Raphael BrunON — momento 11 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SECURITY.webp" alt="Raphael BrunON — momento 12 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SP.webp" alt="Raphael BrunON — momento 13 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+
+        <div class="car-slide"><img src="assets/sobre/galeria/rapha_agacho.webp" alt="Raphael BrunON no evento Fusão Music Training" loading="lazy" decoding="async" width="900" height="1125"></div>        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SP.webp" alt="Raphael BrunON — momento 13 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
         <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-STYLE.webp" alt="Raphael BrunON — momento 14 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
       </div>
       <button class="car-arrow car-next" type="button" aria-label="Próxima foto">›</button>
@@ -953,21 +959,53 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <p class="eyebrow">Depoimentos</p>
       <h2>Quem já sentiu, recomenda.</h2>
     </div>
-    <div class="t-grid">
-      <div class="t-card" data-reveal>
+    <div class="t-marquee" id="testimonialMarquee" aria-label="Depoimentos dos alunos. Passe o mouse ou toque e segure para pausar.">
+      <div class="t-marquee-track">
+        <div class="t-marquee-group"><div class="t-card">
         <span class="t-mark" aria-hidden="true">&ldquo;</span>
         <p class="t-quote">Entrei sem confiança nenhuma e hoje não perco uma aula de Bike. O Raphael tem um jeito único de motivar.</p>
         <p class="t-tag"><span class="t-tag-modality">Bike Indoor</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">há 8 meses</span></p>
       </div>
-      <div class="t-card" data-reveal>
+      <div class="t-card">
         <span class="t-mark" aria-hidden="true">&ldquo;</span>
         <p class="t-quote">A coreografia do nosso casamento foi o momento mais comentado da festa. Profissionalismo do início ao fim.</p>
         <p class="t-tag"><span class="t-tag-modality">Casamento</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">recente</span></p>
       </div>
-      <div class="t-card" data-reveal>
+      <div class="t-card">
         <span class="t-mark" aria-hidden="true">&ldquo;</span>
         <p class="t-quote">O personal me ajudou a entender meu corpo de um jeito que nenhum outro treino tinha conseguido.</p>
         <p class="t-tag"><span class="t-tag-modality">Personal Trainer</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">há 1 ano</span></p>
+      </div></div>
+        <div class="t-marquee-group" aria-hidden="true"><div class="t-card">
+        <span class="t-mark" aria-hidden="true">&ldquo;</span>
+        <p class="t-quote">Entrei sem confiança nenhuma e hoje não perco uma aula de Bike. O Raphael tem um jeito único de motivar.</p>
+        <p class="t-tag"><span class="t-tag-modality">Bike Indoor</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">há 8 meses</span></p>
+      </div>
+      <div class="t-card">
+        <span class="t-mark" aria-hidden="true">&ldquo;</span>
+        <p class="t-quote">A coreografia do nosso casamento foi o momento mais comentado da festa. Profissionalismo do início ao fim.</p>
+        <p class="t-tag"><span class="t-tag-modality">Casamento</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">recente</span></p>
+      </div>
+      <div class="t-card">
+        <span class="t-mark" aria-hidden="true">&ldquo;</span>
+        <p class="t-quote">O personal me ajudou a entender meu corpo de um jeito que nenhum outro treino tinha conseguido.</p>
+        <p class="t-tag"><span class="t-tag-modality">Personal Trainer</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">há 1 ano</span></p>
+      </div></div>
+        <div class="t-marquee-group" aria-hidden="true"><div class="t-card">
+        <span class="t-mark" aria-hidden="true">&ldquo;</span>
+        <p class="t-quote">Entrei sem confiança nenhuma e hoje não perco uma aula de Bike. O Raphael tem um jeito único de motivar.</p>
+        <p class="t-tag"><span class="t-tag-modality">Bike Indoor</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">há 8 meses</span></p>
+      </div>
+      <div class="t-card">
+        <span class="t-mark" aria-hidden="true">&ldquo;</span>
+        <p class="t-quote">A coreografia do nosso casamento foi o momento mais comentado da festa. Profissionalismo do início ao fim.</p>
+        <p class="t-tag"><span class="t-tag-modality">Casamento</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">recente</span></p>
+      </div>
+      <div class="t-card">
+        <span class="t-mark" aria-hidden="true">&ldquo;</span>
+        <p class="t-quote">O personal me ajudou a entender meu corpo de um jeito que nenhum outro treino tinha conseguido.</p>
+        <p class="t-tag"><span class="t-tag-modality">Personal Trainer</span><span class="dot" aria-hidden="true"></span><span class="t-tag-time">há 1 ano</span></p>
+      </div></div>
       </div>
     </div>
   </div>
@@ -982,13 +1020,13 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     <h2 data-reveal>Bora<br><span class="accent-on">começar?</span></h2>
     <p data-reveal>Fale comigo agora mesmo e encontre a modalidade certa para o seu momento — seja para treinar, dançar ou brilhar na pista.</p>
     <div class="contact-actions" data-reveal>
-      <a class="btn btn-primary" href="https://wa.me/5500000000000" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+      <a class="btn btn-primary" href="https://wa.me/5511966837551" target="_blank" rel="noopener">Chamar no WhatsApp</a>
       <a class="btn btn-ghost" href="#servicos">Ver modalidades</a>
     </div>
     <div class="contact-links" data-reveal>
       <a href="https://www.instagram.com/raphaelbrunon/?hl=en" target="_blank" rel="noopener">Instagram</a>
       <a href="https://www.youtube.com/@BoomCompanyOficial" target="_blank" rel="noopener">YouTube</a>
-      <a href="tel:+5500000000000">(00) 00000-0000</a>
+      <a href="tel:+5511966837551">(11) 96683-7551</a>
       <a href="mailto:contato@raphaelbrunon.com">contato@raphaelbrunon.com</a>
     </div>
   </div>
@@ -1011,9 +1049,8 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   <div class="foot-social">
     <a href="https://www.instagram.com/raphaelbrunon/?hl=en" target="_blank" rel="noopener">Instagram</a>
     <a href="https://www.youtube.com/@BoomCompanyOficial" target="_blank" rel="noopener">YouTube</a>
-    <a href="https://wa.me/5500000000000" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="https://wa.me/5511966837551" target="_blank" rel="noopener">WhatsApp</a>
   </div>
-  <div>© 2026 Raphael BrunON. Todos os direitos reservados.</div>
 </footer>
 
 <script>
@@ -1368,6 +1405,18 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     heroObserver.observe(hero);
   } else if(!reduceMotion){
     startLoop();
+  }
+
+  /* Depoimentos: toque pressionado, clique, hover ou foco pausam o movimento. */
+  var testimonialMarquee = document.getElementById('testimonialMarquee');
+  if(testimonialMarquee){
+    testimonialMarquee.addEventListener('pointerdown', function(){ testimonialMarquee.classList.add('is-paused'); });
+    ['pointerup','pointercancel','pointerleave'].forEach(function(name){
+      testimonialMarquee.addEventListener(name, function(){ testimonialMarquee.classList.remove('is-paused'); });
+    });
+    document.addEventListener('visibilitychange', function(){
+      testimonialMarquee.classList.toggle('is-paused', document.hidden);
+    });
   }
 
   /* ---------------------------------------------------------
