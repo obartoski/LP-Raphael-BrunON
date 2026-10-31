@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Raphael BrunON | Mais que dança, uma energia real.</title>
 <meta name="description" content="Raphael BrunON — professor, coreógrafo e criador. Bike Indoor, Boom Dance, Boom Jump, Personal Trainer e coreografias para casamentos e debutantes.">
-<link rel="icon" href="assets/hero/on-hero.png">
+<link rel="icon" href="assets/hero/on-hero.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -347,6 +347,7 @@ h1,h2,h3{
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
 }
+.about-frame img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
 .about-frame span{
   font-family:var(--font-display);
   font-size:13px;letter-spacing:.14em;color:var(--text-faint);text-transform:uppercase;
@@ -475,8 +476,8 @@ h1,h2,h3{
   background:linear-gradient(155deg,var(--surface),var(--bg-soft));
   border:1px solid var(--line);
   transition:transform .15s ease-out, opacity .15s ease-out;
-  will-change:transform;
 }
+.car-slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;pointer-events:none;}
 .car-caption{
   position:absolute;left:16px;bottom:14px;z-index:1;
   font-size:11px;letter-spacing:.12em;text-transform:uppercase;
@@ -501,6 +502,15 @@ h1,h2,h3{
   .car-arrow{display:none;}
 }
 
+@media(max-width:980px){
+  .car-slide{transition:none;}
+  .hero-layer{will-change:auto;}
+  .hero-scrim{pointer-events:none;}
+  .car-arrow,.nav-inner{backdrop-filter:none;-webkit-backdrop-filter:none;}
+}
+@supports(content-visibility:auto){
+  .gallery,.videos,.testimonials{content-visibility:auto;contain-intrinsic-size:auto 900px;}
+}
 /* ===========================================================
    VÍDEOS
 =========================================================== */
@@ -522,13 +532,17 @@ h1,h2,h3{
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
 }
-.play-btn{
+.video-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .35s ease;}
+.video-card:hover>img{transform:scale(1.04);}
+.play-btn{position:relative;z-index:1;background:rgba(9,9,11,.48);backdrop-filter:blur(3px);
   width:50px;height:50px;border-radius:50%;
   border:1px solid var(--line-strong);
   display:flex;align-items:center;justify-content:center;
   transition:.3s ease;
 }
-.video-card:hover .play-btn{background:var(--accent);border-color:var(--accent);}
+.video-card:hover .video-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .35s ease;}
+.video-card:hover>img{transform:scale(1.04);}
+.play-btn{position:relative;z-index:1;background:rgba(9,9,11,.48);backdrop-filter:blur(3px);background:var(--accent);border-color:var(--accent);}
 .video-card:hover .play-btn svg path{fill:#09090b;}
 .play-btn svg{width:13px;margin-left:2px;}
 .play-btn svg path{fill:var(--text);transition:fill .3s ease;}
@@ -735,7 +749,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
 <nav class="nav" id="mainNav">
   <div class="nav-left">
     <a class="nav-logo" href="#topo" aria-label="Raphael BrunON — início">
-      <img src="assets/hero/on-hero.png" alt="Raphael BrunON">
+      <img src="assets/hero/on-hero.webp" alt="Raphael BrunON">
     </a>
     <div class="nav-links">
       <a href="#sobre">Sobre</a>
@@ -767,9 +781,9 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
 ============================================================== -->
 <header class="hero" id="topo">
   <div class="hero-stage" aria-hidden="true">
-    <img class="hero-layer hero-bg" id="heroBg" src="assets/hero/background-hero.png" alt="" loading="eager">
-    <img class="hero-layer hero-on" id="heroOn" src="assets/hero/on-hero.png" alt="" loading="eager">
-    <img class="hero-layer hero-raphael" id="heroRaphael" src="assets/hero/raphael-hero.png" alt="Raphael BrunON sorrindo e estendendo a mão para a câmera" loading="eager">
+    <img class="hero-layer hero-bg" id="heroBg" fetchpriority="low" decoding="async" src="assets/hero/background-hero.webp" alt="" loading="eager">
+    <img class="hero-layer hero-on" id="heroOn" fetchpriority="low" decoding="async" src="assets/hero/on-hero.webp" alt="" loading="eager">
+    <img class="hero-layer hero-raphael" id="heroRaphael" fetchpriority="high" decoding="async" src="assets/hero/raphael-hero.webp" alt="Raphael BrunON sorrindo e estendendo a mão para a câmera" loading="eager">
     <div class="hero-scrim"></div>
   </div>
 
@@ -816,8 +830,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     </div>
     <div class="about-visual" data-reveal>
       <div class="about-frame">
-        <!-- substituir por foto real em assets/images/sobre/ -->
-        <span>Foto em aula — em breve</span>
+        <img src="assets/sobre/foto_aula.webp" alt="Raphael BrunON durante uma aula" loading="lazy" decoding="async" width="880" height="1100">
       </div>
       <div class="about-mark" aria-hidden="true"></div>
       <div class="about-mark-bl" aria-hidden="true"></div>
@@ -891,13 +904,20 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     <div class="carousel" data-reveal>
       <button class="car-arrow car-prev" type="button" aria-label="Foto anterior">‹</button>
       <div class="car-track" id="carTrack" tabindex="0" aria-label="Galeria de fotos — arraste ou use as setas para navegar">
-        <!-- substituir os fundos por fotos reais em assets/images/galeria/ -->
-        <div class="car-slide"><span class="car-caption">Bike Indoor</span></div>
-        <div class="car-slide"><span class="car-caption">Boom Dance</span></div>
-        <div class="car-slide"><span class="car-caption">Personal</span></div>
-        <div class="car-slide"><span class="car-caption">Casamentos</span></div>
-        <div class="car-slide"><span class="car-caption">Boom Jump</span></div>
-        <div class="car-slide"><span class="car-caption">Debutantes</span></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SENSES.webp" alt="Raphael BrunON — momento 1 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SBT.webp" alt="Raphael BrunON — momento 2 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-ROCK.webp" alt="Raphael BrunON — momento 3 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-FILA.webp" alt="Raphael BrunON — momento 4 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-FEST.webp" alt="Raphael BrunON — momento 5 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-MINI.webp" alt="Raphael BrunON — momento 6 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-RISONHO.webp" alt="Raphael BrunON — momento 7 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-KIDS.webp" alt="Raphael BrunON — momento 8 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-LIVINHO.webp" alt="Raphael BrunON — momento 9 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-BRASIL.webp" alt="Raphael BrunON — momento 10 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-DANCE-MATO.webp" alt="Raphael BrunON — momento 11 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SECURITY.webp" alt="Raphael BrunON — momento 12 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SP.webp" alt="Raphael BrunON — momento 13 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-STYLE.webp" alt="Raphael BrunON — momento 14 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
       </div>
       <button class="car-arrow car-next" type="button" aria-label="Próxima foto">›</button>
     </div>
@@ -917,9 +937,9 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <a class="ig-link" href="https://www.instagram.com/raphaelbrunon/?hl=en" target="_blank" rel="noopener">Ver mais no Instagram →</a>
     </div>
     <div class="video-row">
-      <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-      <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-      <div class="video-card" data-reveal><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <a class="video-card" data-reveal href="https://www.instagram.com/reel/Dc9axrns_vZ/" target="_blank" rel="noopener noreferrer" aria-label="Assistir ao Reels 1 de Raphael BrunON no Instagram"><img src="assets/sobre/galeria/feed/reels1.webp" alt="Capa do Reels 1" loading="lazy" decoding="async" width="540" height="960"><span class="play-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
+      <a class="video-card" data-reveal href="https://www.instagram.com/reel/DbTDdEix3aP/" target="_blank" rel="noopener noreferrer" aria-label="Assistir ao Reels 2 de Raphael BrunON no Instagram"><img src="assets/sobre/galeria/feed/reels2.webp" alt="Capa do Reels 2" loading="lazy" decoding="async" width="540" height="960"><span class="play-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
+      <a class="video-card" data-reveal href="https://www.instagram.com/reel/DcrPbKkMqvQ/" target="_blank" rel="noopener noreferrer" aria-label="Assistir ao Reels 3 de Raphael BrunON no Instagram"><img src="assets/sobre/galeria/feed/reels3.webp" alt="Capa do Reels 3" loading="lazy" decoding="async" width="540" height="960"><span class="play-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -979,7 +999,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
 ============================================================== -->
 <footer>
   <a class="foot-brand" href="#topo" aria-label="Raphael BrunON — início">
-    <img src="assets/hero/on-hero.png" alt="">
+    <img src="assets/hero/on-hero.webp" alt="">
     <span>Raphael BrunON</span>
   </a>
   <div class="foot-links">
@@ -1400,7 +1420,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     carTrack.addEventListener('pointercancel', carEndDrag);
 
     // profundidade tipo "pilha de fotos" — só sem prefers-reduced-motion
-    if(!reduceMotion){
+    if(!reduceMotion && window.matchMedia('(min-width:981px)').matches){
       var carTicking = false;
       function updateCarDepth(){
         var trackRect = carTrack.getBoundingClientRect();
