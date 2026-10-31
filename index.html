@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Raphael BrunON | Mais que dança, uma energia real.</title>
-<meta name="description" content="Raphael BrunON — professor, coreógrafo e criador. Bike Indoor, Boom Dance, Boom Jump, Personal Trainer e coreografias para casamentos e debutantes.">
+<meta name="description" content="Raphael BrunON , professor, coreógrafo e criador. Bike Indoor, Boom Dance, Boom Jump, Personal Trainer e coreografias para casamentos e debutantes.">
 <link rel="icon" href="assets/hero/on-hero.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -552,15 +552,13 @@ h1,h2,h3{
 =========================================================== */
 .testimonials{background:var(--bg);}
 /* Deslizamento contínuo, sem timers ou leituras de layout a cada frame */
-.t-marquee{overflow:hidden;position:relative;touch-action:pan-y;cursor:grab;}
-.t-marquee:active{cursor:grabbing;}
-.t-marquee-track{display:flex;width:max-content;animation:depoimentos-fluir 42s linear infinite;will-change:transform;}
+.t-marquee{overflow:hidden;position:relative;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;}
+.t-marquee.is-dragging{cursor:grabbing;}
+.t-marquee-track{display:flex;width:max-content;transform:translate3d(0,0,0);will-change:transform;}
 .t-marquee-group{display:flex;flex:0 0 auto;gap:24px;padding-right:24px;align-items:stretch;}
 .t-marquee-group .t-card{flex:0 0 clamp(280px,29vw,370px);width:clamp(280px,29vw,370px);}
-.t-marquee:hover .t-marquee-track,.t-marquee:focus-within .t-marquee-track,.t-marquee.is-paused .t-marquee-track{animation-play-state:paused;}
-@keyframes depoimentos-fluir{to{transform:translateX(-33.333333%);}}
 @media(max-width:640px){.t-marquee-group .t-card{flex-basis:82vw;width:82vw;}}
-@media(prefers-reduced-motion:reduce){.t-marquee{overflow-x:auto;scrollbar-width:thin;}.t-marquee-track{animation:none;will-change:auto;}}
+@media(prefers-reduced-motion:reduce){.t-marquee-track{will-change:auto;}}
 .t-card{
   position:relative;
   background:var(--surface);
@@ -753,7 +751,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
 ============================================================== -->
 <nav class="nav" id="mainNav">
   <div class="nav-left">
-    <a class="nav-logo" href="#topo" aria-label="Raphael BrunON — início">
+    <a class="nav-logo" href="#topo" aria-label="Raphael BrunON , início">
       <img src="assets/hero/on-hero.webp" alt="Raphael BrunON">
     </a>
     <div class="nav-links">
@@ -821,8 +819,8 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     <div class="about-copy" data-reveal>
       <p class="eyebrow">Quem é Raphael</p>
       <h2>Ensinar é a<br>minha forma de mover pessoas.</h2>
-      <p>Tudo começou com uma paixão simples: o movimento. Ao longo dos anos, essa paixão virou profissão — e a profissão virou propósito. Como professor de Educação Física, encontrei na dança, no ritmo e na performance uma forma diferente de ensinar: uma que transforma corpo e mente ao mesmo tempo.</p>
-      <p>Cada aula é construída para tirar o aluno da zona de conforto, com técnica, energia e acolhimento. Não é sobre ser o melhor da turma — é sobre se superar, aula após aula.</p>
+      <p>Tudo começou com uma paixão simples: o movimento. Ao longo dos anos, essa paixão virou profissão, e a profissão virou propósito. Como professor de Educação Física, encontrei na dança, no ritmo e na performance uma forma diferente de ensinar: uma que transforma corpo e mente ao mesmo tempo.</p>
+      <p>Cada aula é construída para tirar o aluno da zona de conforto, com técnica, energia e acolhimento. Não é sobre ser o melhor da turma, é sobre se superar, aula após aula.</p>
       <div class="specialties">
         <span class="chip">Professor de Educação Física</span>
         <span class="chip">Bike Indoor</span>
@@ -907,23 +905,23 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     <h2 style="font-size:clamp(34px,4.6vw,58px);margin:14px 0 40px;" data-reveal>Momentos em movimento.</h2>
     <div class="carousel" data-reveal>
       <button class="car-arrow car-prev" type="button" aria-label="Foto anterior">‹</button>
-      <div class="car-track" id="carTrack" tabindex="0" aria-label="Galeria de fotos — arraste ou use as setas para navegar">
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SENSES.webp" alt="Raphael BrunON — momento 1 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SBT.webp" alt="Raphael BrunON — momento 2 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-ROCK.webp" alt="Raphael BrunON — momento 3 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-FILA.webp" alt="Raphael BrunON — momento 4 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+      <div class="car-track" id="carTrack" tabindex="0" aria-label="Galeria de fotos , arraste ou use as setas para navegar">
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SENSES.webp" alt="Raphael BrunON , momento 1 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SBT.webp" alt="Raphael BrunON , momento 2 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-ROCK.webp" alt="Raphael BrunON , momento 3 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-FILA.webp" alt="Raphael BrunON , momento 4 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
 
-        <div class="car-slide"><img src="assets/sobre/galeria/foto_fusao.webp" alt="Raphael BrunON no evento Fusão Music Training" loading="lazy" decoding="async" width="900" height="1125"></div>        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-FEST.webp" alt="Raphael BrunON — momento 5 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-MINI.webp" alt="Raphael BrunON — momento 6 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-RISONHO.webp" alt="Raphael BrunON — momento 7 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-KIDS.webp" alt="Raphael BrunON — momento 8 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-LIVINHO.webp" alt="Raphael BrunON — momento 9 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-BRASIL.webp" alt="Raphael BrunON — momento 10 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-DANCE-MATO.webp" alt="Raphael BrunON — momento 11 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SECURITY.webp" alt="Raphael BrunON — momento 12 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/foto_fusao.webp" alt="Raphael BrunON no evento Fusão Music Training" loading="lazy" decoding="async" width="900" height="1125"></div>        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-FEST.webp" alt="Raphael BrunON , momento 5 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-MINI.webp" alt="Raphael BrunON , momento 6 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-RISONHO.webp" alt="Raphael BrunON , momento 7 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-KIDS.webp" alt="Raphael BrunON , momento 8 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-LIVINHO.webp" alt="Raphael BrunON , momento 9 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-BRASIL.webp" alt="Raphael BrunON , momento 10 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-DANCE-MATO.webp" alt="Raphael BrunON , momento 11 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SECURITY.webp" alt="Raphael BrunON , momento 12 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
 
-        <div class="car-slide"><img src="assets/sobre/galeria/rapha_agacho.webp" alt="Raphael BrunON no evento Fusão Music Training" loading="lazy" decoding="async" width="900" height="1125"></div>        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SP.webp" alt="Raphael BrunON — momento 13 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
-        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-STYLE.webp" alt="Raphael BrunON — momento 14 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/rapha_agacho.webp" alt="Raphael BrunON no evento Fusão Music Training" loading="lazy" decoding="async" width="900" height="1125"></div>        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-SP.webp" alt="Raphael BrunON , momento 13 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
+        <div class="car-slide"><img src="assets/sobre/galeria/RAPHA-STYLE.webp" alt="Raphael BrunON , momento 14 da galeria" loading="lazy" decoding="async" width="900" height="1125"></div>
       </div>
       <button class="car-arrow car-next" type="button" aria-label="Próxima foto">›</button>
     </div>
@@ -959,7 +957,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
       <p class="eyebrow">Depoimentos</p>
       <h2>Quem já sentiu, recomenda.</h2>
     </div>
-    <div class="t-marquee" id="testimonialMarquee" aria-label="Depoimentos dos alunos. Passe o mouse ou toque e segure para pausar.">
+    <div class="t-marquee" id="testimonialMarquee" aria-label="Depoimentos dos alunos. Arraste para os lados para explorar os comentários." tabindex="0">
       <div class="t-marquee-track">
         <div class="t-marquee-group"><div class="t-card">
         <span class="t-mark" aria-hidden="true">&ldquo;</span>
@@ -1018,7 +1016,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
   <div class="section-inner">
     <p class="eyebrow" data-reveal>Vamos treinar</p>
     <h2 data-reveal>Bora<br><span class="accent-on">começar?</span></h2>
-    <p data-reveal>Fale comigo agora mesmo e encontre a modalidade certa para o seu momento — seja para treinar, dançar ou brilhar na pista.</p>
+    <p data-reveal>Fale comigo agora mesmo e encontre a modalidade certa para o seu momento, seja para treinar, dançar ou brilhar na pista.</p>
     <div class="contact-actions" data-reveal>
       <a class="btn btn-primary" href="https://wa.me/5511966837551" target="_blank" rel="noopener">Chamar no WhatsApp</a>
       <a class="btn btn-ghost" href="#servicos">Ver modalidades</a>
@@ -1036,7 +1034,7 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
      FOOTER
 ============================================================== -->
 <footer>
-  <a class="foot-brand" href="#topo" aria-label="Raphael BrunON — início">
+  <a class="foot-brand" href="#topo" aria-label="Raphael BrunON , início">
     <img src="assets/hero/on-hero.webp" alt="">
     <span>Raphael BrunON</span>
   </a>
@@ -1407,16 +1405,90 @@ html.js-reveal [data-reveal].in{opacity:1;transform:translateY(0);}
     startLoop();
   }
 
-  /* Depoimentos: toque pressionado, clique, hover ou foco pausam o movimento. */
+  /* Depoimentos: movimento contínuo, arraste livre e retomada automática. */
   var testimonialMarquee = document.getElementById('testimonialMarquee');
   if(testimonialMarquee){
-    testimonialMarquee.addEventListener('pointerdown', function(){ testimonialMarquee.classList.add('is-paused'); });
-    ['pointerup','pointercancel','pointerleave'].forEach(function(name){
-      testimonialMarquee.addEventListener(name, function(){ testimonialMarquee.classList.remove('is-paused'); });
+    var marqueeTrack = testimonialMarquee.querySelector('.t-marquee-track');
+    var marqueeGroup = marqueeTrack.querySelector('.t-marquee-group');
+    var marqueeX = 0;
+    var marqueeWidth = 0;
+    var marqueePointer = null;
+    var marqueeLastX = 0;
+    var marqueeLastTime = 0;
+    var marqueeVisible = true;
+    var marqueeVelocity = 0;
+    var marqueeReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function marqueeMeasure(){
+      marqueeWidth = marqueeGroup.getBoundingClientRect().width;
+      marqueeWrap();
+      marqueePaint();
+    }
+    function marqueeWrap(){
+      if(!marqueeWidth) return;
+      marqueeX = ((marqueeX % marqueeWidth) - marqueeWidth) % marqueeWidth;
+    }
+    function marqueePaint(){
+      marqueeTrack.style.transform = 'translate3d(' + marqueeX + 'px,0,0)';
+    }
+    function marqueeEnd(e){
+      if(marqueePointer === null || (e && e.pointerId !== marqueePointer)) return;
+      if(e && testimonialMarquee.hasPointerCapture(e.pointerId)) testimonialMarquee.releasePointerCapture(e.pointerId);
+      marqueePointer = null;
+      marqueeVelocity = 0;
+      marqueeLastTime = performance.now();
+      testimonialMarquee.classList.remove('is-dragging');
+    }
+    testimonialMarquee.addEventListener('pointerdown',function(e){
+      if(e.pointerType === 'mouse' && e.button !== 0) return;
+      marqueePointer = e.pointerId;
+      marqueeLastX = e.clientX;
+      marqueeLastTime = performance.now();
+      marqueeVelocity = 0;
+      testimonialMarquee.classList.add('is-dragging');
+      testimonialMarquee.setPointerCapture(e.pointerId);
     });
-    document.addEventListener('visibilitychange', function(){
-      testimonialMarquee.classList.toggle('is-paused', document.hidden);
+    testimonialMarquee.addEventListener('pointermove',function(e){
+      if(e.pointerId !== marqueePointer) return;
+      var dx = e.clientX - marqueeLastX;
+      if(Math.abs(dx) > 0){
+        marqueeX += dx;
+        marqueeWrap();
+        marqueePaint();
+        marqueeLastX = e.clientX;
+      }
     });
+    testimonialMarquee.addEventListener('pointerup',marqueeEnd);
+    testimonialMarquee.addEventListener('pointercancel',marqueeEnd);
+    testimonialMarquee.addEventListener('lostpointercapture',function(){
+      marqueePointer = null;
+      testimonialMarquee.classList.remove('is-dragging');
+    });
+    testimonialMarquee.addEventListener('dragstart',function(e){e.preventDefault();});
+    testimonialMarquee.addEventListener('keydown',function(e){
+      if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+        e.preventDefault();
+        marqueeX += e.key === 'ArrowLeft' ? 120 : -120;
+        marqueeWrap();
+        marqueePaint();
+      }
+    });
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){marqueeVisible = entries[0].isIntersecting;}, {threshold:0}).observe(testimonialMarquee);
+    }
+    var marqueePrevFrame = 0;
+    function marqueeFrame(now){
+      var dt = marqueePrevFrame ? Math.min((now - marqueePrevFrame)/1000,0.05) : 0;
+      marqueePrevFrame = now;
+      if(marqueeWidth && marqueePointer === null && marqueeVisible && !document.hidden && !marqueeReduced.matches){
+        marqueeX -= dt * 42;
+        marqueeWrap();
+        marqueePaint();
+      }
+      requestAnimationFrame(marqueeFrame);
+    }
+    marqueeMeasure();
+    window.addEventListener('resize',marqueeMeasure,{passive:true});
+    requestAnimationFrame(marqueeFrame);
   }
 
   /* ---------------------------------------------------------
